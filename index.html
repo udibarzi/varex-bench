@@ -5,227 +5,450 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VAREX-Bench — Multi-Modal Structured Extraction from Documents</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #fefefe;
-            --bg-card: rgba(255,255,255,0.9);
-            --border: rgba(0,0,0,0.06);
-            --teal: #0d7377;
-            --amber: #b8860b;
-            --coral: #c44536;
-            --slate: #3d5a80;
-            --plum: #6b4c6e;
-            --text-1: #1a1a2e;
-            --text-2: #4a5568;
-            --text-3: #a0aab4;
-            --accent: #0d7377;
+            /* Core palette */
+            --blue:   #1A73E8;
+            --blue-dark: #1557B0;
+            --blue-light: #E8F0FE;
+            --green:  #34A853;
+            --green-light: #E6F4EA;
+            --yellow: #F9AB00;
+            --yellow-light: #FEF7E0;
+            --red:    #EA4335;
+            --red-light: #FCE8E6;
+
+            /* Surfaces */
+            --bg:       #FFFFFF;
+            --bg-alt:   #F8F9FA;
+            --bg-card:  #FFFFFF;
+            --border:   #E8EAED;
+            --border-strong: #DADCE0;
+
+            /* Text */
+            --text-1: #202124;
+            --text-2: #5F6368;
+            --text-3: #80868B;
+            --text-4: #BDC1C6;
+
+            /* Accent */
+            --accent: var(--blue);
+
+            /* Material shadows */
+            --shadow-1: 0 1px 2px rgba(60,64,67,0.30), 0 1px 3px 1px rgba(60,64,67,0.15);
+            --shadow-2: 0 1px 2px rgba(60,64,67,0.30), 0 2px 6px 2px rgba(60,64,67,0.15);
+            --shadow-3: 0 4px 8px 3px rgba(60,64,67,0.15), 0 1px 3px rgba(60,64,67,0.30);
         }
+
         * { margin:0; padding:0; box-sizing:border-box; }
         html { scroll-behavior: smooth; }
+
         body {
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'IBM Plex Sans', sans-serif;
             background: var(--bg);
-            background-image:
-                radial-gradient(ellipse 80% 60% at 20% 0%, rgba(13,115,119,0.03) 0%, transparent 60%),
-                radial-gradient(ellipse 60% 50% at 80% 100%, rgba(184,134,11,0.02) 0%, transparent 50%);
-            background-attachment: fixed;
             color: var(--text-1);
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
-        .font-serif { font-family: 'Instrument Serif', serif; }
-        .mono { font-family: 'JetBrains Mono', monospace; }
 
-        .glass { background: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+        .mono { font-family: 'IBM Plex Mono', monospace; }
 
-        /* Subtle grain */
-        body::after {
-            content: '';
-            position: fixed; inset: 0;
-            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.015'/%3E%3C/svg%3E");
-            pointer-events: none; z-index: 9999;
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: var(--shadow-1);
+            transition: box-shadow 0.2s;
         }
-        .section-line { height: 1px; background: linear-gradient(90deg, transparent 5%, var(--border) 50%, transparent 95%); max-width: 1100px; margin: 0 auto; }
+        .card:hover { box-shadow: var(--shadow-2); }
 
-        .reveal { opacity:0; transform:translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        /* Dividers */
+        .section-divider {
+            height: 1px;
+            background: var(--border);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Reveal animation */
+        .reveal { opacity:0; transform:translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
         .reveal.vis { opacity:1; transform:translateY(0); }
-        .fade-up { opacity:0; transform:translateY(20px); animation: fadeUp 0.7s ease forwards; }
+        .fade-up { opacity:0; transform:translateY(16px); animation: fadeUp 0.6s ease forwards; }
         @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
-        .d1{animation-delay:.1s} .d2{animation-delay:.2s} .d3{animation-delay:.3s} .d4{animation-delay:.4s}
+        .d1{animation-delay:.08s} .d2{animation-delay:.16s} .d3{animation-delay:.24s} .d4{animation-delay:.32s}
 
-        nav a { transition: color 0.2s; }
-        nav a:hover { color: var(--accent); }
+        /* Chip */
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 8px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+        }
+        .chip-blue   { background: var(--blue-light);   color: #1557B0; }
+        .chip-green  { background: var(--green-light);  color: #137333; }
+        .chip-yellow { background: var(--yellow-light); color: #B06000; }
+        .chip-red    { background: var(--red-light);    color: #C5221F; }
+
+        /* Eyebrow label */
+        .eyebrow {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--blue);
+        }
+
+        /* Primary button */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 20px;
+            background: var(--blue);
+            color: #fff;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-family: 'IBM Plex Sans', sans-serif;
+            letter-spacing: 0.01em;
+            transition: background 0.15s, box-shadow 0.15s;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        .btn-primary:hover { background: var(--blue-dark); box-shadow: var(--shadow-1); }
+
+        /* Outlined button */
+        .btn-outlined {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 20px;
+            background: transparent;
+            color: var(--blue);
+            border: 1px solid var(--border-strong);
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            font-family: 'IBM Plex Sans', sans-serif;
+            letter-spacing: 0.01em;
+            transition: background 0.15s, border-color 0.15s;
+        }
+        .btn-outlined:hover { background: var(--blue-light); border-color: var(--blue); }
+
+        /* Nav */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 50;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(60,64,67,0.12);
+        }
+        nav a { transition: color 0.15s; }
+        nav a:hover { color: var(--blue); }
 
         /* Score colors */
-        .sc-high { color: var(--teal); }
-        .sc-mid { color: var(--amber); }
-        .sc-low { color: var(--coral); }
+        .sc-high { color: var(--green); }
+        .sc-mid  { color: var(--yellow); }
+        .sc-low  { color: var(--red); }
 
         /* Leaderboard */
-        .lb th { font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-3); padding:10px 12px; text-align:center; border-bottom:2px solid var(--border); }
-        .lb th.sort-active { color: var(--text-1); border-bottom-color: var(--text-1); }
-        .lb th:first-child, .lb td:first-child { text-align:left; }
-        .lb td { padding:9px 12px; border-bottom:1px solid var(--border); font-size:0.85rem; text-align:center; transition: background 0.15s; }
-        .lb tr:hover td { background: rgba(0,0,0,0.02); }
-        .lb .model-name { font-weight:600; color: var(--text-1); }
-        .lb .model-size { font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:var(--text-3); }
-        .lb .cat-tag { font-size:0.58rem; padding:2px 6px; border-radius:4px; font-weight:600; white-space:nowrap; margin-left:6px; }
+        .lb { width: 100%; border-collapse: collapse; }
+        .lb th {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            padding: 10px 14px;
+            text-align: center;
+            border-bottom: 2px solid var(--border);
+            white-space: nowrap;
+            cursor: pointer;
+            user-select: none;
+        }
+        .lb th:hover { color: var(--text-1); }
+        .lb th.sort-active { color: var(--blue); border-bottom-color: var(--blue); }
+        .lb th:first-child, .lb td:first-child { text-align: left; }
+        .lb td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px;
+            text-align: center;
+            transition: background 0.1s;
+        }
+        .lb tr:hover td { background: var(--bg-alt); }
+        .lb .model-name { font-weight: 500; color: var(--text-1); }
+        .lb .model-size { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--text-3); }
+        .lb .cat-tag { margin-left: 6px; }
+
+        /* Modality tabs */
+        .mod-tab {
+            flex: 1;
+            min-width: 90px;
+            padding: 12px 10px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-3);
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            font-family: 'IBM Plex Sans', sans-serif;
+            transition: color 0.15s, border-color 0.15s, background 0.15s;
+            white-space: nowrap;
+        }
+        .mod-tab:hover { color: var(--text-1); background: var(--bg-alt); }
+        .mod-tab.active-tab {
+            color: var(--blue);
+            font-weight: 500;
+            border-bottom-color: var(--blue);
+            background: transparent;
+        }
 
         /* Example cards */
-        .example-card { transition: transform 0.2s; cursor: pointer; }
-        .example-card:hover { transform: translateY(-2px); }
-        .example-detail { max-height: 0; overflow: hidden; transition: max-height 0.5s ease, padding 0.3s ease; }
-        .example-detail.open { max-height: 2000px; }
+        .example-card { transition: box-shadow 0.2s; cursor: pointer; }
+        .example-card:hover { box-shadow: var(--shadow-3); }
+        .example-detail { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+        .example-detail.open { max-height: 1500px; }
 
-        /* Modality panels */
-        .mod-panel { background: var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:14px; font-family:'JetBrains Mono',monospace; font-size:0.72rem; line-height:1.6; color:var(--text-2); white-space:pre; overflow-x:auto; min-height:120px; }
+        /* Lightbox */
+        .lightbox-overlay {
+            position: fixed; inset: 0; z-index: 100;
+            background: rgba(32,33,36,0.85);
+            backdrop-filter: blur(4px);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+        .lightbox-overlay.active { opacity: 1; pointer-events: auto; }
+        .lightbox-overlay img {
+            max-width: 90vw; max-height: 90vh;
+            border-radius: 8px;
+            box-shadow: var(--shadow-3);
+            transform: scale(0.92);
+            transition: transform 0.3s ease;
+        }
+        .lightbox-overlay.active img { transform: scale(1); }
+        .lightbox-close {
+            position: absolute; top: 20px; right: 24px;
+            background: rgba(255,255,255,0.9); border: none;
+            width: 36px; height: 36px; border-radius: 50%;
+            font-size: 20px; cursor: pointer; color: var(--text-1);
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: var(--shadow-1);
+            transition: background 0.15s;
+        }
+        .lightbox-close:hover { background: #fff; }
+
+        /* FAQ */
+        .faq-item {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 2px;
+        }
+        .faq-btn {
+            width: 100%;
+            padding: 16px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'IBM Plex Sans', sans-serif;
+            text-align: left;
+            transition: background 0.15s;
+        }
+        .faq-btn:hover { background: var(--bg-alt); }
+
+        /* Code block */
+        .code-block {
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 20px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11.5px;
+            color: var(--text-2);
+            line-height: 1.7;
+            overflow: auto;
+        }
+
+        /* Section helpers */
+        .section-alt { background: var(--bg-alt); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        /* Annotation callout */
+        .callout-green  { background: rgba(52,168,83,0.06);  border-left: 3px solid var(--green);  border-radius: 0 6px 6px 0; }
+        .callout-red    { background: rgba(234,67,53,0.06);  border-left: 3px solid var(--red);    border-radius: 0 6px 6px 0; }
+        .callout-blue   { background: rgba(26,115,232,0.06); border-left: 3px solid var(--blue);   border-radius: 0 6px 6px 0; }
+        .callout-yellow { background: rgba(249,171,0,0.07);  border-left: 3px solid var(--yellow); border-radius: 0 6px 6px 0; }
+        .callout-purple { background: rgba(107,76,110,0.06); border-left: 3px solid #8E44AD;       border-radius: 0 6px 6px 0; }
     </style>
 </head>
 <body>
 
-<!-- Nav -->
-<nav style="position:fixed; top:0; left:0; right:0; z-index:50; background:rgba(254,254,254,0.92); backdrop-filter:blur(12px); border-bottom:1px solid var(--border);">
-    <div style="max-width:1100px; margin:0 auto; padding:16px 24px; display:flex; align-items:center; justify-content:space-between;">
-        <a href="#" class="mono" style="font-size:14px; color:var(--text-2); text-decoration:none; letter-spacing:0.04em; font-weight:500;">VAREX-BENCH</a>
-        <div style="display:flex; gap:28px; font-size:13px; color:var(--text-3);">
-            <a href="#modalities" style="color:inherit; text-decoration:none;">Modalities</a>
-            <a href="#leaderboard" style="color:inherit; text-decoration:none;">Leaderboard</a>
-            <a href="#examples" style="color:inherit; text-decoration:none;">Examples</a>
-            <a href="#about" style="color:inherit; text-decoration:none;">About</a>
-            <a href="#download" style="color:inherit; text-decoration:none;">Download</a>
+<!-- ═══════════════════════ NAV ═══════════════════════ -->
+<nav>
+    <div class="container" style="display:flex; align-items:center; justify-content:space-between; height:64px;">
+        <!-- Logo area -->
+        <div style="display:flex; align-items:center; gap:16px;">
+            <span class="mono" style="font-size:14px; font-weight:500; color:var(--text-2); letter-spacing:0.06em;">VAREX-BENCH</span>
+        </div>
+
+        <div style="display:flex; gap:4px; font-size:13px; font-weight:500; color:var(--text-2);">
+            <a href="#modalities" style="color:inherit; text-decoration:none; padding:6px 12px; border-radius:4px; transition:background 0.15s, color 0.15s;" onmouseenter="this.style.background='#F1F3F4'" onmouseleave="this.style.background=''">Modalities</a>
+            <a href="#leaderboard" style="color:inherit; text-decoration:none; padding:6px 12px; border-radius:4px; transition:background 0.15s, color 0.15s;" onmouseenter="this.style.background='#F1F3F4'" onmouseleave="this.style.background=''">Leaderboard</a>
+            <a href="#examples" style="color:inherit; text-decoration:none; padding:6px 12px; border-radius:4px; transition:background 0.15s, color 0.15s;" onmouseenter="this.style.background='#F1F3F4'" onmouseleave="this.style.background=''">Examples</a>
+            <a href="#about" style="color:inherit; text-decoration:none; padding:6px 12px; border-radius:4px; transition:background 0.15s, color 0.15s;" onmouseenter="this.style.background='#F1F3F4'" onmouseleave="this.style.background=''">About</a>
+            <a href="#download" style="color:inherit; text-decoration:none; padding:6px 12px; border-radius:4px; transition:background 0.15s, color 0.15s;" onmouseenter="this.style.background='#F1F3F4'" onmouseleave="this.style.background=''">Download</a>
         </div>
     </div>
 </nav>
 
-<!-- Hero -->
-<section style="max-width:1100px; margin:0 auto; padding:120px 24px 56px;">
-    <div style="max-width:680px;">
-        <h1 class="font-serif fade-up" style="font-size:56px; line-height:1.05; letter-spacing:-0.02em;">VAREX</h1>
-        <p class="font-serif fade-up d1" style="font-size:22px; color:var(--text-2); margin-top:8px; font-style:italic; line-height:1.35;">
-            A benchmark for multi-modal structured extraction from documents
-        </p>
-        <p class="fade-up d2" style="font-size:15px; line-height:1.7; color:var(--text-2); margin-top:20px; max-width:560px;">
-            1,798 government forms with unique per-document schemas, evaluated across four input modalities.
-            Built for diagnosing where small models (≤4B) fail — and how to fix them.
-        </p>
-        <div class="fade-up d3" style="display:flex; gap:10px; margin-top:28px; flex-wrap:wrap;">
-            <a href="#" class="glass" style="display:inline-flex; align-items:center; gap:6px; padding:9px 18px; border-radius:8px; color:var(--text-2); text-decoration:none; font-size:13px; font-weight:500; transition:all 0.15s;">
-                📄 Paper
-            </a>
-            <a href="#" class="glass" style="display:inline-flex; align-items:center; gap:6px; padding:9px 18px; border-radius:8px; color:var(--text-2); text-decoration:none; font-size:13px; font-weight:500; transition:all 0.15s;">
-                📦 Dataset
-            </a>
-            <a href="#" class="glass" style="display:inline-flex; align-items:center; gap:6px; padding:9px 18px; border-radius:8px; color:var(--text-2); text-decoration:none; font-size:13px; font-weight:500; transition:all 0.15s;">
-                ⌨ Code
-            </a>
-        </div>
-    </div>
-</section>
-
-<!-- Stats -->
-<section style="max-width:1100px; margin:0 auto; padding:0 24px 48px;">
-    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:14px;">
-        <div class="glass reveal" style="border-radius:10px; padding:22px 18px;">
-            <div class="font-serif" style="font-size:30px; font-weight:600;">1,798</div>
-            <div style="font-size:13px; font-weight:600; color:var(--text-1); margin-top:3px;">Documents</div>
-            <div style="font-size:11px; color:var(--text-3); margin-top:2px;">single-page government forms</div>
-        </div>
-        <div class="glass reveal" style="border-radius:10px; padding:22px 18px;">
-            <div class="font-serif" style="font-size:30px; font-weight:600;">1,793</div>
-            <div style="font-size:13px; font-weight:600; color:var(--text-1); margin-top:3px;">Unique Schemas</div>
-            <div style="font-size:11px; color:var(--text-3); margin-top:2px;">per-document extraction targets</div>
-        </div>
-        <div class="glass reveal" style="border-radius:10px; padding:22px 18px;">
-            <div class="font-serif" style="font-size:30px; font-weight:600;">21,261</div>
-            <div style="font-size:13px; font-weight:600; color:var(--text-1); margin-top:3px;">Evaluation Fields</div>
-            <div style="font-size:11px; color:var(--text-3); margin-top:2px;">validated through 3-phase QA</div>
-        </div>
-        <div class="glass reveal" style="border-radius:10px; padding:22px 18px;">
-            <div class="font-serif" style="font-size:30px; font-weight:600;">4</div>
-            <div style="font-size:13px; font-weight:600; color:var(--text-1); margin-top:3px;">Input Modalities</div>
-            <div style="font-size:11px; color:var(--text-3); margin-top:2px;">text · spatial · image · combined</div>
-        </div>
-    </div>
-</section>
-
-<div class="section-line"></div>
-
-<!-- Pipeline Diagram -->
-<section style="max-width:1100px; margin:0 auto; padding:48px 24px 16px;">
-    <div class="reveal" style="text-align:center; margin-bottom:12px;">
-        <span class="mono" style="font-size:12px; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-3);">The Task</span>
-        <h2 class="font-serif" style="font-size:34px; margin-top:6px;">Structured extraction from documents</h2>
-    </div>
-    <div class="reveal" style="display:flex; align-items:center; justify-content:center; gap:12px; padding:28px 16px; flex-wrap:wrap;">
-        <!-- Input -->
-        <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
-            <div class="glass" style="border-radius:10px; padding:16px 20px; text-align:center; min-width:140px;">
-                <div style="font-size:24px; margin-bottom:4px;">📄</div>
-                <div style="font-size:13px; font-weight:600; color:var(--text-1);">Document</div>
-                <div style="font-size:11px; color:var(--text-3); margin-top:2px;">image, text, or both</div>
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<section style="padding: 100px 0 56px;">
+    <div class="container">
+        <div style="max-width: 680px;">
+            <div class="fade-up" style="margin-bottom: 12px;">
+                <span class="eyebrow">Research Benchmark</span>
             </div>
-        </div>
-        <div style="font-size:20px; color:var(--text-3);">+</div>
-        <!-- Schema -->
-        <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
-            <div class="glass" style="border-radius:10px; padding:16px 20px; text-align:center; min-width:140px;">
-                <div style="font-size:24px; margin-bottom:4px;">{ }</div>
-                <div style="font-size:13px; font-weight:600; color:var(--text-1);">JSON Schema</div>
-                <div style="font-size:11px; color:var(--text-3); margin-top:2px;">unique per document</div>
-            </div>
-        </div>
-        <!-- Arrow -->
-        <div style="font-size:24px; color:var(--accent);">→</div>
-        <!-- Model -->
-        <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
-            <div style="border-radius:10px; padding:16px 20px; text-align:center; min-width:140px; background:rgba(13,115,119,0.08); border:1px solid rgba(13,115,119,0.2);">
-                <div style="font-size:24px; margin-bottom:4px;">🤖</div>
-                <div style="font-size:13px; font-weight:600; color:var(--accent);">Model</div>
-                <div style="font-size:11px; color:var(--text-3); margin-top:2px;">800M → frontier API</div>
-            </div>
-        </div>
-        <!-- Arrow -->
-        <div style="font-size:24px; color:var(--accent);">→</div>
-        <!-- Output -->
-        <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
-            <div class="glass" style="border-radius:10px; padding:16px 20px; text-align:center; min-width:140px;">
-                <div style="font-size:24px; margin-bottom:4px;">✓</div>
-                <div style="font-size:13px; font-weight:600; color:var(--text-1);">Structured JSON</div>
-                <div style="font-size:11px; color:var(--text-3); margin-top:2px;">scored vs ground truth</div>
+            <h1 class="fade-up d1" style="font-size: 52px; font-weight: 400; line-height: 1.1; letter-spacing: -0.02em; color: var(--text-1);">
+                VAREX
+            </h1>
+            <p class="fade-up d2" style="font-size: 20px; font-weight: 300; color: var(--text-2); margin-top: 8px; line-height: 1.4;">
+                A benchmark for multi-modal structured extraction from documents
+            </p>
+            <p class="fade-up d3" style="font-size: 15px; line-height: 1.75; color: var(--text-2); margin-top: 20px; max-width: 560px;">
+                1,798 government forms with unique per-document schemas, evaluated across four input modalities.
+                Built for diagnosing where small models (≤4B) fail — and how to fix them.
+            </p>
+            <div class="fade-up d4" style="display:flex; gap:10px; margin-top:32px; flex-wrap:wrap; align-items:center;">
+                <a href="#" class="btn-primary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>
+                    Paper
+                </a>
+                <a href="#" class="btn-outlined">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-2.18c.07-.44.18-.88.18-1.36 0-2.57-2.1-4.64-4.67-4.64C11.55.0 10.3.64 9.44 1.67L8 3.35 6.56 1.67C5.7.64 4.45 0 3.17 0 .6 0-1.5 2.07-1.5 4.64c0 .48.11.92.18 1.36H-2c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h22c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg>
+                    Dataset
+                </a>
+                <a href="#" class="btn-outlined">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+                    Code
+                </a>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Anatomy / Modalities -->
-<section id="modalities" style="max-width:1100px; margin:0 auto; padding:16px 24px 48px;">
-    <div class="reveal" style="text-align:center; margin-bottom:24px;">
-        <span class="mono" style="font-size:12px; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-3);">Explore</span>
-        <h2 class="font-serif" style="font-size:34px; margin-top:6px;">Anatomy of a benchmark item</h2>
-        <p style="font-size:14px; color:var(--text-2); margin-top:8px; max-width:520px; display:inline-block;">
-            Click through the tabs to see what models receive as input and what they must produce as output.
-        </p>
+<!-- ═══════════════════════ STATS ═══════════════════════ -->
+<section class="section-alt" style="padding: 40px 0 48px;">
+    <div class="container">
+        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px;">
+            <div class="card reveal" style="padding: 24px 20px;">
+                <div style="font-size: 36px; font-weight: 300; color: var(--blue); line-height:1;">1,798</div>
+                <div style="font-size: 14px; font-weight: 500; color: var(--text-1); margin-top: 6px;">Documents</div>
+                <div style="font-size: 12px; color: var(--text-3); margin-top: 3px;">single-page government forms</div>
+            </div>
+            <div class="card reveal" style="padding: 24px 20px;">
+                <div style="font-size: 36px; font-weight: 300; color: var(--blue); line-height:1;">1,793</div>
+                <div style="font-size: 14px; font-weight: 500; color: var(--text-1); margin-top: 6px;">Unique Schemas</div>
+                <div style="font-size: 12px; color: var(--text-3); margin-top: 3px;">per-document extraction targets</div>
+            </div>
+            <div class="card reveal" style="padding: 24px 20px;">
+                <div style="font-size: 36px; font-weight: 300; color: var(--blue); line-height:1;">21,261</div>
+                <div style="font-size: 14px; font-weight: 500; color: var(--text-1); margin-top: 6px;">Evaluation Fields</div>
+                <div style="font-size: 12px; color: var(--text-3); margin-top: 3px;">validated through 3-phase QA</div>
+            </div>
+            <div class="card reveal" style="padding: 24px 20px;">
+                <div style="font-size: 36px; font-weight: 300; color: var(--blue); line-height:1;">4</div>
+                <div style="font-size: 14px; font-weight: 500; color: var(--text-1); margin-top: 6px;">Input Modalities</div>
+                <div style="font-size: 12px; color: var(--text-3); margin-top: 3px;">text · spatial · image · combined</div>
+            </div>
+        </div>
     </div>
+</section>
 
-    <div class="glass reveal" style="border-radius:12px; overflow:hidden;">
-        <!-- Tabs -->
-        <div style="display:flex; border-bottom:1px solid var(--border); background:rgba(0,0,0,0.015); overflow-x:auto;" id="mod-tabs">
-            <button class="mod-tab active" onclick="switchMod('image')" data-tab="image" style="flex:1; min-width:90px; padding:12px 10px; font-size:12px; font-weight:600; color:var(--text-1); background:var(--bg-card); border:none; border-bottom:2px solid var(--accent); cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s;">Image (V)</button>
-            <button class="mod-tab" onclick="switchMod('schema')" data-tab="schema" style="flex:1; min-width:90px; padding:12px 10px; font-size:12px; font-weight:500; color:var(--text-3); background:transparent; border:none; border-bottom:2px solid transparent; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s;">Schema</button>
-            <button class="mod-tab" onclick="switchMod('gt')" data-tab="gt" style="flex:1; min-width:90px; padding:12px 10px; font-size:12px; font-weight:500; color:var(--text-3); background:transparent; border:none; border-bottom:2px solid transparent; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s;">Ground Truth</button>
-            <button class="mod-tab" onclick="switchMod('flow')" data-tab="flow" style="flex:1; min-width:90px; padding:12px 10px; font-size:12px; font-weight:500; color:var(--text-3); background:transparent; border:none; border-bottom:2px solid transparent; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s;">Plain Text (P)</button>
-            <button class="mod-tab" onclick="switchMod('layout')" data-tab="layout" style="flex:1; min-width:90px; padding:12px 10px; font-size:12px; font-weight:500; color:var(--text-3); background:transparent; border:none; border-bottom:2px solid transparent; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s;">Spatial Text (S)</button>
-            <button class="mod-tab" onclick="switchMod('image50')" data-tab="image50" style="flex:1; min-width:90px; padding:12px 10px; font-size:12px; font-weight:500; color:var(--text-3); background:transparent; border:none; border-bottom:2px solid transparent; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s;">50 DPI</button>
-            <button class="mod-tab" onclick="switchMod('sv')" data-tab="sv" style="flex:1; min-width:90px; padding:12px 10px; font-size:12px; font-weight:500; color:var(--text-3); background:transparent; border:none; border-bottom:2px solid transparent; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s;">S + V</button>
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════ TASK DIAGRAM ═══════════════════════ -->
+<section style="padding: 56px 0 24px;">
+    <div class="container">
+        <div class="reveal" style="text-align:center; margin-bottom: 16px;">
+            <span class="eyebrow">The Task</span>
+            <h2 style="font-size: 30px; font-weight: 400; margin-top: 8px; color: var(--text-1);">Structured extraction from documents</h2>
         </div>
 
-        <!-- Panels -->
-        <div style="position:relative; min-height:520px;">
-            <!-- Schema -->
-            <div class="mod-content" id="mod-schema" style="padding:20px; opacity:0; position:absolute; top:0; left:0; right:0; pointer-events:none; transition:opacity 0.3s;">
-                <pre class="mono" style="font-size:11px; line-height:1.55; color:var(--text-2); max-height:480px; overflow:auto; margin:0; white-space:pre-wrap;">{
-  "<span style="color:var(--slate)">$defs</span>": {
-    "<span style="color:var(--accent)">Beneficiary</span>": {
+        <div class="reveal" style="display:flex; align-items:center; justify-content:center; gap:12px; padding:36px 16px; flex-wrap:wrap;">
+            <div class="card" style="padding: 20px 24px; text-align:center; min-width:140px;">
+                <div style="font-size: 28px; margin-bottom: 6px;">📄</div>
+                <div style="font-size: 13px; font-weight: 500; color: var(--text-1);">Document</div>
+                <div style="font-size: 11px; color: var(--text-3); margin-top: 3px;">image, text, or both</div>
+            </div>
+            <div style="color: var(--text-3); font-size: 22px; font-weight: 300;">+</div>
+            <div class="card" style="padding: 20px 24px; text-align:center; min-width:140px;">
+                <div style="font-size: 28px; margin-bottom: 6px; font-family: 'IBM Plex Mono', monospace; color: var(--blue);">{ }</div>
+                <div style="font-size: 13px; font-weight: 500; color: var(--text-1);">JSON Schema</div>
+                <div style="font-size: 11px; color: var(--text-3); margin-top: 3px;">unique per document</div>
+            </div>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="var(--blue)" style="flex-shrink:0"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+            <div style="background: var(--blue-light); border: 1px solid rgba(26,115,232,0.2); border-radius: 8px; padding: 20px 24px; text-align:center; min-width:140px;">
+                <div style="font-size: 28px; margin-bottom: 6px;">🤖</div>
+                <div style="font-size: 13px; font-weight: 500; color: var(--blue);">Model</div>
+                <div style="font-size: 11px; color: var(--text-3); margin-top: 3px;">800M → frontier API</div>
+            </div>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="var(--blue)" style="flex-shrink:0"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+            <div class="card" style="padding: 20px 24px; text-align:center; min-width:140px;">
+                <div style="font-size: 28px; margin-bottom: 6px; color: var(--green);">✓</div>
+                <div style="font-size: 13px; font-weight: 500; color: var(--text-1);">Structured JSON</div>
+                <div style="font-size: 11px; color: var(--text-3); margin-top: 3px;">scored vs ground truth</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════ MODALITIES ═══════════════════════ -->
+<section id="modalities" style="padding: 16px 0 56px;">
+    <div class="container">
+        <div class="reveal" style="text-align:center; margin-bottom: 28px;">
+            <span class="eyebrow">Explore</span>
+            <h2 style="font-size: 30px; font-weight: 400; margin-top: 8px; color: var(--text-1);">Anatomy of a benchmark item</h2>
+            <p style="font-size: 14px; color: var(--text-2); margin-top: 8px;">
+                Click through the tabs to see what models receive as input and what they must produce as output.
+            </p>
+        </div>
+
+        <div class="card reveal" style="overflow:hidden; padding:0;">
+            <!-- Tabs -->
+            <div style="display:flex; border-bottom:1px solid var(--border); overflow-x:auto;" id="mod-tabs">
+                <button class="mod-tab active-tab" onclick="switchMod('image')" data-tab="image">Image (V)</button>
+                <button class="mod-tab" onclick="switchMod('schema')" data-tab="schema">Schema</button>
+                <button class="mod-tab" onclick="switchMod('gt')" data-tab="gt">Ground Truth</button>
+                <button class="mod-tab" onclick="switchMod('flow')" data-tab="flow">Plain Text (P)</button>
+                <button class="mod-tab" onclick="switchMod('layout')" data-tab="layout">Spatial Text (S)</button>
+                <button class="mod-tab" onclick="switchMod('image50')" data-tab="image50">50 DPI</button>
+                <button class="mod-tab" onclick="switchMod('sv')" data-tab="sv">S + V</button>
+            </div>
+
+            <!-- Panels -->
+            <div style="position:relative; min-height:520px;">
+                <!-- Schema -->
+                <div class="mod-content" id="mod-schema" style="padding:24px; opacity:0; position:absolute; top:0; left:0; right:0; pointer-events:none; transition:opacity 0.25s;">
+                    <pre class="mono" style="font-size:11px; line-height:1.6; color:var(--text-2); max-height:460px; overflow:auto; margin:0; white-space:pre-wrap; background:var(--bg-alt); border:1px solid var(--border); border-radius:8px; padding:16px;">{
+  "<span style="color:var(--blue)">$defs</span>": {
+    "<span style="color:var(--green)">Beneficiary</span>": {
       "type": "object",
       "properties": {
         "name":         { "type": "string", "description": "Name of the beneficiary" },
@@ -234,7 +457,7 @@
         "address":      { "type": "string", "description": "Address of the beneficiary" }
       }
     },
-    "<span style="color:var(--accent)">InsuredAssignee</span>": {
+    "<span style="color:var(--green)">InsuredAssignee</span>": {
       "type": "object",
       "properties": {
         "name":    { "type": "string" },
@@ -243,160 +466,62 @@
       }
     }
   },
-  "<span style="color:var(--slate)">properties</span>": {
+  "<span style="color:var(--blue)">properties</span>": {
     "insured_name":          { "type": "string" },
     "insured_date_of_birth": { "type": "string" },
     "insured_ssn":           { "type": "string" },
-    "insured_claim_number":  { "type": "number" },
-    "insured_department":    { "type": "string" },
-    "insured_bureau":        { "type": "string" },
-    "insured_location":      { "type": "string" },
-    "total_percentage":      { "type": "integer" },
-    "beneficiaries":    { "type": "array", "items": { "<span style="color:var(--accent)">$ref</span>": "#/$defs/Beneficiary" } },
-    "insured_assignee": { "<span style="color:var(--accent)">$ref</span>": "#/$defs/InsuredAssignee" }
+    "insured_status":        { "type": "string" },
+    "department":            { "type": "string" },
+    "bureau_division":       { "type": "string" },
+    "location":              { "type": "string" },
+    "beneficiaries":         { "type": "array", "items": { "$ref": "#/$defs/Beneficiary" } },
+    "claim_number":          { "type": "string" },
+    "assignee":              { "$ref": "#/$defs/InsuredAssignee" }
   }
 }</pre>
-                <div style="margin-top:12px; padding:10px 14px; background:rgba(61,90,128,0.06); border-radius:6px; border-left:3px solid var(--slate);">
-                    <span style="font-size:12px; color:var(--text-2);">Each document has a unique JSON Schema. This one defines 10 fields including a <strong>Beneficiary</strong> array (4 columns × 6 rows) and a nested <strong>InsuredAssignee</strong> object — models must output valid JSON matching this structure.</span>
                 </div>
-            </div>
 
-            <!-- Ground Truth -->
-            <div class="mod-content" id="mod-gt" style="padding:20px; opacity:0; position:absolute; top:0; left:0; right:0; pointer-events:none; transition:opacity 0.3s;">
-                <pre class="mono" style="font-size:11px; line-height:1.55; color:var(--text-2); max-height:480px; overflow:auto; margin:0; white-space:pre-wrap;">{
-  "insured_name": "<span style="color:var(--teal)">Walter, Nicole</span>",
-  "insured_date_of_birth": "<span style="color:var(--teal)">06/19/1965</span>",
-  "insured_ssn": "<span style="color:var(--teal)">230-74-0063</span>",
-  "insured_claim_number": <span style="color:var(--teal)">0.0</span>,
-  "insured_department": "<span style="color:var(--teal)">Wise-Castillo</span>",
-  "insured_bureau": "<span style="color:var(--teal)">Air Brokerage</span>",
-  "insured_location": "<span style="color:var(--teal)">East Randybury, TN</span>",
-  "total_percentage": <span style="color:var(--teal)">100</span>,
-  "beneficiaries": [
-    { "name": "<span style="color:var(--teal)">Brown, Danielle H.</span>", "relationship": "Friend", "percentage": 20, "address": "1035 Brian Drives Apt. 047" },
-    { "name": "<span style="color:var(--teal)">Mendoza, Brian</span>", "relationship": "Colleague", "percentage": 15, "address": "253 Caleb Plain" },
-    { "name": "<span style="color:var(--teal)">James Orozco</span>", "relationship": "Boss", "percentage": 25, "address": "123 Business Ave" },
-    { "name": "<span style="color:var(--teal)">Cook, Emily</span>", "relationship": "Friend", "percentage": 10, "address": "456 Oak Street" },
-    { "name": "<span style="color:var(--teal)">Ingram, Sarah</span>", "relationship": "Sister", "percentage": 20, "address": "789 Pine Road" },
-    { "name": "<span style="color:var(--teal)">Perez, John</span>", "relationship": "Brother", "percentage": 10, "address": "321 Elm Boulevard" }
+                <!-- Ground Truth -->
+                <div class="mod-content" id="mod-gt" style="padding:24px; opacity:0; position:absolute; top:0; left:0; right:0; pointer-events:none; transition:opacity 0.25s;">
+                    <pre class="mono" style="font-size:11px; line-height:1.6; color:var(--text-2); max-height:460px; overflow:auto; margin:0; white-space:pre-wrap; background:var(--bg-alt); border:1px solid var(--border); border-radius:8px; padding:16px;">{
+  "<span style="color:var(--blue)">insured_name</span>": "Walter, Nicole",
+  "<span style="color:var(--blue)">insured_date_of_birth</span>": "06/19/1965",
+  "<span style="color:var(--blue)">insured_ssn</span>": "230-74-0063",
+  "<span style="color:var(--blue)">insured_status</span>": "employee",
+  "<span style="color:var(--blue)">department</span>": "Wise-Castillo",
+  "<span style="color:var(--blue)">bureau_division</span>": "Air Brokerage",
+  "<span style="color:var(--blue)">location</span>": "East Randybury, TN",
+  "<span style="color:var(--blue)">beneficiaries</span>": [
+    { "name": "Brown, Danielle H.", "relationship": "Friend",    "percentage": 20 },
+    { "name": "Mendoza, Brian",     "relationship": "Colleague", "percentage": 15 },
+    { "name": "James Orozco",       "relationship": "Boss",      "percentage": 25 },
+    { "name": "Cook, Emily",        "relationship": "Friend",    "percentage": 10 },
+    { "name": "Ingram, Sarah",      "relationship": "Sister",    "percentage": 20 },
+    { "name": "Perez, John",        "relationship": "Brother",   "percentage": 10 }
   ],
-  "insured_assignee": {
-    "name": "<span style="color:var(--teal)">Nicole Walter</span>",
-    "address": "<span style="color:var(--teal)">7389 Benjamin Hollow Apt. 565, East Randybury, TN</span>",
-    "date": "<span style="color:var(--teal)">11/15/2023</span>"
+  "<span style="color:var(--blue)">assignee</span>": {
+    "name": "Nicole Walter",
+    "address": "7389 Benjamin Hollow Apt. 565, East Randybury, TN",
+    "date": "11/15/2023"
   }
 }</pre>
-                <div style="margin-top:12px; padding:10px 14px; background:rgba(13,115,119,0.06); border-radius:6px; border-left:3px solid var(--teal);">
-                    <span style="font-size:12px; color:var(--text-2);">Deterministic ground truth — every value was programmatically written to a specific PDF widget. Beneficiary percentages sum to 100. Dates follow mm/dd/yyyy. All values are synthetic (generated by Faker + LLM).</span>
                 </div>
-            </div>
 
-            <!-- Plain Text -->
-            <div class="mod-content" id="mod-flow" style="padding:20px; opacity:0; position:absolute; top:0; left:0; right:0; pointer-events:none; transition:opacity 0.3s;">
-                <pre class="mono" style="font-size:11px; line-height:1.55; color:var(--text-2); white-space:pre-wrap; max-height:480px; overflow-y:auto; margin:0;">Form Approved
-Designation of Beneficiary
-OMB No. 3206-0136
-Federal Employees
-Federal Employees' Group Life Insurance (FEGLI) Program
-Important:
-Group Life Insurance
-Read instructions on the
-(DO NOT erase or cross-out. Use a new form.)
-Back of Part 2 before completing this form.
-Name of Insured (Last, first, middle)
-A.   Information About the Insured (not the Assignee, if there is one) (type or print)
-Date of birth of Insured (mm/dd/yyyy)
-Social Security Number of Insured
-The Insured is:
-Place an "X" in the
-appropriate box.
-an employee
-a retiree
-a compensationer
-If the Insured is retired or receiving Federal Employees' Compensation, give CSA,
-CSI, or OWCP claim number:
-Department or agency where the Insured works (If retired, last department or agency where the Insured worked):
-Department or agency
-Bureau or division
-Location (city, state, and ZIP code)
-First name, middle initial, and last name of
-each beneficiary
-Social Security Number
-Address (Including ZIP code)
-Percent or fraction
-designated
-Relationship
-B. Information About the Beneficiary or Beneficiaries (See Back of Part 1 for examples) (type or print)
-Total  (Must equal 100% or 1.0) (Do not use dollar amounts)
-(Do not put a Total if you designated types of insurance. See example 4 on Back of Part 1.)
-C. Statement of Insured or Assignee (type or print)
-Your name and address (Including ZIP code)
-Please check one:
-Please check all three:
-I am:
-the Insured
-I have not assigned the insurance.
-an Assignee
-Two people who witnessed my
-signature signed below.
-See Back of Part 2 for definitions
-I did not name either witness as a
-beneficiary.
-I understand that if there is a valid assignment on file, only the assignee has the
-right to designate a beneficiary. If a valid assignment is not on file, but there is a
-valid court order on file with the agency or the U.S. Office of Personnel
-Management, as appropriate, any designation I complete for the same benefits is
-not valid.
-I understand that if this Designation is valid, it will stay in effect unless it is
-canceled. (See "When Is A Designation Canceled?" on the Back of Part 2).
-I understand that if this Designation is invalid for any reason, the Office of
-Federal Employees' Group Life Insurance will pay benefits according to the
-next most recent valid designation. If there isn't one, it will pay according to the
-order listed on the Back of Part 2.
-I am canceling any and all previous Designations of Beneficiary under the
-Federal Employees' Group Life Insurance Program and am now designating the
-beneficiary(ies) named above.
-Date (mm/dd/yyyy)
-Signature of Insured/Assignee (Only the Insured/Assignee may sign. Signatures by guardians, conservators or through a power
-of attorney are not acceptable.)
-D. Witnesses To Signature (A witness is not eligible to receive a payment as a beneficiary.)
-E. For Agency Use Only (or OPM, as appropriate)
-Signature of witness
-Signature of witness
-Address (Including ZIP code)
-Address (Including ZIP code)
-Receiving agency
-Date of receipt (mm/dd/yyyy)
-Signature of authorized official
-Title
-This form is not valid unless the Insured/Assignee signs in this box.
-U.S. Office of Personnel Management
-SF 2823
-FEGLI Handbook (RI 76-26)
-Previous editions are not usable.
-Revised May 2014
+                <!-- Plain Text -->
+                <div class="mod-content" id="mod-flow" style="padding:24px; opacity:0; position:absolute; top:0; left:0; right:0; pointer-events:none; transition:opacity 0.25s;">
+                    <pre class="mono" style="font-size:11px; line-height:1.6; color:var(--text-2); max-height:430px; overflow:auto; margin:0; white-space:pre-wrap; background:var(--bg-alt); border:1px solid var(--border); border-radius:8px; padding:16px;">Designation of Beneficiary
+Federal Employees Group Life Insurance (FEGLI) Program
 Walter, Nicole
 06/19/1965
 230-74-0063
-0.0
+employee
 Wise-Castillo
 Air Brokerage
 East Randybury, TN
 Brown, Danielle H.
-1035 Brian Drives Apt. 047
 Friend
 20
-253 Caleb Plain
-25
-123 Business Ave
-456 Oak Street
-20
-789 Pine Road
-321 Elm Boulevard
-Brother
-Ingram, Sarah
-Friend
-James Orozco
+Mendoza, Brian
 Colleague
 15
 10
@@ -410,14 +535,14 @@ Nicole Walter
 7389 Benjamin Hollow Apt. 565, East Randybury, TN
 11/15/2023
 100</pre>
-                <div style="margin-top:12px; padding:10px 14px; background:rgba(196,69,54,0.06); border-radius:6px; border-left:3px solid var(--coral);">
-                    <span style="font-size:12px; color:var(--text-2);">⚠ Labels and values are interleaved with no spatial structure. "Brown, Danielle H." appears far from "Friend" and "20" — models must guess which values belong together.</span>
+                    <div class="callout-red" style="margin-top:12px; padding:10px 14px;">
+                        <span style="font-size:12px; color:var(--text-2);">⚠ Labels and values are interleaved with no spatial structure. "Brown, Danielle H." appears far from "Friend" and "20" — models must guess which values belong together.</span>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Spatial Text -->
-            <div class="mod-content" id="mod-layout" style="padding:20px; opacity:0; position:absolute; top:0; left:0; right:0; pointer-events:none; transition:opacity 0.3s;">
-                <pre class="mono" style="font-size:9.5px; line-height:1.4; color:var(--text-2); white-space:pre; max-height:480px; overflow:auto; margin:0;">                                                                                                                                               Form Approved
+                <!-- Spatial Text -->
+                <div class="mod-content" id="mod-layout" style="padding:24px; opacity:0; position:absolute; top:0; left:0; right:0; pointer-events:none; transition:opacity 0.25s;">
+                    <pre class="mono" style="font-size:9px; line-height:1.4; color:var(--text-2); white-space:pre; max-height:430px; overflow:auto; margin:0; background:var(--bg-alt); border:1px solid var(--border); border-radius:8px; padding:16px;">                                                                                                                                               Form Approved
                                                              Designation of Beneficiary                                     OMB No. 3206-0136
         Federal Employees                        Federal Employees' Group Life Insurance (FEGLI) Program                Read instructions Important: on the
         Group Life Insurance                                 (DO NOT erase or cross-out. Use a new form.)           Back of Part 2 before completing this form.
@@ -428,9 +553,8 @@ Nicole Walter
        Walter, Nicole                                                            06/19/1965                          230-74-0063
 
        The Insured is:                   an employee                              If the Insured is retired or receiving Federal Employees' Compensation, give CSA,
-                                                                                  CSI, or OWCP claim number:
           Place an "X" in the            a retiree
-          appropriate box.                                                         0.0
+          appropriate box.
                                        a compensationer
 
        Department or agency where the Insured works (If retired, last department or agency where the Insured worked):
@@ -438,316 +562,301 @@ Nicole Walter
        Department or agency                                                        Bureau or division                      Location (city, state, and ZIP code)
        Wise-Castillo                                                             Air Brokerage                       East Randybury, TN
 
+       B.  Information About the Beneficiary or Beneficiaries
 
-       B.  Information About the Beneficiary or Beneficiaries (See Back of Part 1 for examples) (type or print)
+          First name, middle initial, and last name           SSN         Address (Including ZIP code)                Relationship    Percent
+       Brown, Danielle H.                                             1035 Brian Drives Apt. 047                     Friend                 20
+       Mendoza, Brian                                                 253 Caleb Plain                                Colleague             15
+       James Orozco                                                   123 Business Ave                              Boss                   25
+       Cook, Emily                                                    456 Oak Street                                Friend                 10
+       Ingram, Sarah                                                  789 Pine Road                                 Sister                 20
+       Perez, John                                                    321 Elm Boulevard                             Brother                10
 
-          First name, middle initial, and last name of       Social Security Number           Address (Including ZIP code)            Relationship    Percent or fraction
-                      each beneficiary                                                                                                          designated
-                                                                              1035 Brian Drives Apt. 047
-       Brown, Danielle H.                                                                                             Friend                         20
-                                                                              253 Caleb Plain
-       Mendoza, Brian                                                                                                Colleague                     15
-                                                                              123 Business Ave
-       James Orozco                                                                                                 Boss                          25
-                                                                              456 Oak Street
-       Cook, Emily                                                                                                    Friend                         10
-                                                                              789 Pine Road
-       Ingram, Sarah                                                                                                 Sister                          20
-                                                                              321 Elm Boulevard
-       Perez, John                                                                                                    Brother                        10
-
-
-
-
-                                        Total (Must equal 100% or 1.0) (Do not use dollar amounts)                                                   100
-                                        (Do not put a Total if you designated types of insurance. See example 4 on Back of Part 1.)
-
-       C.  Statement of Insured or Assignee (type or print)
-
-       Your name and address (Including ZIP code)                                Please check one:                   Please check all three:
-       Nicole Walter                                                        I am:
-
-       7389 Benjamin Hollow Apt. 565, East Randybury, TN                   the Insured                        I have not assigned the insurance.
-                                                                                                                      Two people who witnessed my
-                                                                                   an Assignee                      signature signed below.
-                                                                                                                      I did not name either witness as a
-                                                                              See Back of Part 2 for definitions          beneficiary.
-
-       I understand that if there is a valid assignment on file, only the assignee has the   I understand that if this Designation is invalid for any reason, the Office of
-       right to designate a beneficiary. If a valid assignment is not on file, but there is a  Federal Employees' Group Life Insurance will pay benefits according to the
-       valid court order on file with the agency or the U.S. Office of Personnel           next most recent valid designation. If there isn't one, it will pay according to the
-       Management, as appropriate, any designation I complete for the same benefits is  order listed on the Back of Part 2.
-       not valid.
-                                                                                  I am canceling any and all previous Designations of Beneficiary under the
-       I understand that if this Designation is valid, it will stay in effect unless it is       Federal Employees' Group Life Insurance Program and am now designating the
-       canceled. (See "When Is A Designation Canceled?" on the Back of Part 2).       beneficiary(ies) named above.
-
-
-       Signature of Insured/Assignee                                                                                              Date (mm/dd/yyyy)
-       of attorney are not acceptable.) This form is not valid unless the Insured/Assignee signs in this box.
-                                                                                                                      11/15/2023
-
-       D.  Witnesses To Signature (A witness is not eligible to receive a payment as a beneficiary.)
-
-       Signature of witness                                  Address (Including ZIP code)
-
-      Signature of witness                                  Address (Including ZIP code)
-
-       E. For Agency Use Only (or OPM, as appropriate)
-
-      Receiving agency                      Date of receipt (mm/dd/yyyy)      Signature of authorized official                  Title
-
-
-
-
-                                                                          Part 1 - Original
-       U.S. Office of Personnel Management                                                                                                              SF 2823
-       FEGLI Handbook (RI 76-26)                                                                    Previous editions are not usable.              Revised May 2014
-                                     PRINT      SAVE      CLEAR</pre>
-                <div style="margin-top:12px; padding:10px 14px; background:rgba(13,115,119,0.06); border-radius:6px; border-left:3px solid var(--teal);">
-                    <span style="font-size:12px; color:var(--text-2);">✓ Column alignment preserved. "Brown, Danielle H." is visually aligned with "Friend" and "20" — the table structure is recoverable from whitespace alone. <strong>This modality alone provides +4–19pp over plain text.</strong></span>
+                                        Total (Must equal 100%)                                                                           100</pre>
+                    <div class="callout-green" style="margin-top:12px; padding:10px 14px;">
+                        <span style="font-size:12px; color:var(--text-2);">✓ Column alignment preserved. "Brown, Danielle H." is visually aligned with "Friend" and "20" — the table structure is recoverable from whitespace alone. <strong>This modality alone provides +4–19pp over plain text.</strong></span>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Image 200 DPI -->
-            <div class="mod-content" id="mod-image" style="padding:20px; opacity:1; transition:opacity 0.3s; text-align:center;">
-                <!-- REPLACE: src="images/document_200dpi.png" -->
-                <div style="max-height:480px; overflow:auto; display:inline-block;">
-                    <img src="images/document.png" alt="SF-2823 at 200 DPI" style="max-width:100%; border-radius:4px; border:1px solid var(--border);">
+                <!-- Image 200 DPI -->
+                <div class="mod-content" id="mod-image" style="padding:24px; opacity:1; transition:opacity 0.25s; text-align:center;">
+                    <div style="max-height:460px; overflow:auto; display:inline-block;">
+                        <img src="images/document.png" alt="SF-2823 at 200 DPI" style="max-width:100%; border-radius:4px; border:1px solid var(--border);">
+                    </div>
+                    <div class="callout-blue" style="margin-top:12px; padding:10px 14px; text-align:left;">
+                        <span style="font-size:12px; color:var(--text-2);">Primary evaluation modality. Clean digital render at 200 DPI — all text is legible. Frontier models reach 97.8% EM.</span>
+                    </div>
                 </div>
-                <div style="margin-top:12px; padding:10px 14px; background:rgba(61,90,128,0.06); border-radius:6px; border-left:3px solid var(--slate); text-align:left;">
-                    <span style="font-size:12px; color:var(--text-2);">Primary evaluation modality. Clean digital render at 200 DPI — all text is legible. Frontier models reach 97.8% EM.</span>
-                </div>
-            </div>
 
-            <!-- Image 50 DPI -->
-            <div class="mod-content" id="mod-image50" style="padding:20px; opacity:0; position:absolute; top:0; left:0; right:0; pointer-events:none; transition:opacity 0.3s; text-align:center;">
-                <!-- REPLACE: src="images/document_50dpi.png" -->
-                <div style="max-height:480px; overflow:auto; display:inline-block;">
-                    <img src="images/document_50dpi.png" alt="SF-2823 at 50 DPI" style="max-width:100%; border-radius:4px; border:1px solid var(--border); image-rendering:pixelated;">
+                <!-- Image 50 DPI -->
+                <div class="mod-content" id="mod-image50" style="padding:24px; opacity:0; position:absolute; top:0; left:0; right:0; pointer-events:none; transition:opacity 0.25s; text-align:center;">
+                    <div style="max-height:460px; overflow:auto; display:inline-block;">
+                        <img src="images/document_50dpi.png" alt="SF-2823 at 50 DPI" style="max-width:100%; border-radius:4px; border:1px solid var(--border); image-rendering:pixelated;">
+                    </div>
+                    <div class="callout-red" style="margin-top:12px; padding:10px 14px; text-align:left;">
+                        <span style="font-size:12px; color:var(--text-2);">⚠ Same document at 50 DPI. Gemini degrades gracefully (−1.5pp). Open models in the 8–17B range <strong>crash 38–40pp</strong>, falling from 93%+ to the mid-50s.</span>
+                    </div>
                 </div>
-                <div style="margin-top:12px; padding:10px 14px; background:rgba(196,69,54,0.06); border-radius:6px; border-left:3px solid var(--coral); text-align:left;">
-                    <span style="font-size:12px; color:var(--text-2);">⚠ Same document at 50 DPI. Gemini degrades gracefully (−1.5pp). Open models in the 8–17B range <strong>crash 38–40pp</strong>, falling from 93%+ to the mid-50s.</span>
-                </div>
-            </div>
 
-            <!-- S+V -->
-            <div class="mod-content" id="mod-sv" style="padding:20px; opacity:0; position:absolute; top:0; left:0; right:0; pointer-events:none; transition:opacity 0.3s; text-align:center;">
-                <!-- REPLACE: src="images/document.png" -->
-                <div style="max-height:480px; overflow:auto; display:inline-block;">
-                    <img src="images/document.png" alt="SF-2823 S+V" style="max-width:100%; border-radius:4px; border:1px solid var(--border);">
-                </div>
-                <div style="margin-top:12px; padding:10px 14px; background:rgba(107,76,110,0.06); border-radius:6px; border-left:3px solid var(--plum); text-align:left;">
-                    <span style="font-size:12px; color:var(--text-2);">Both spatial text and image provided simultaneously. Best overall modality — S+V reaches <strong>96.7%</strong> for Gemini Flash and <strong>96.4%</strong> for Llama 4 Maverick.</span>
+                <!-- S+V -->
+                <div class="mod-content" id="mod-sv" style="padding:24px; opacity:0; position:absolute; top:0; left:0; right:0; pointer-events:none; transition:opacity 0.25s; text-align:center;">
+                    <div style="max-height:460px; overflow:auto; display:inline-block;">
+                        <img src="images/document.png" alt="SF-2823 S+V" style="max-width:100%; border-radius:4px; border:1px solid var(--border);">
+                    </div>
+                    <div class="callout-purple" style="margin-top:12px; padding:10px 14px; text-align:left;">
+                        <span style="font-size:12px; color:var(--text-2);">Both spatial text and image provided simultaneously. Best overall modality — S+V reaches <strong>96.7%</strong> for Gemini Flash and <strong>96.4%</strong> for Llama 4 Maverick.</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<div class="section-line"></div>
+<div class="section-divider"></div>
 
-<!-- Leaderboard -->
-<section id="leaderboard" style="max-width:1100px; margin:0 auto; padding:48px 24px;">
-    <div class="reveal" style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:18px;">
-        <div>
-            <span class="mono" style="font-size:12px; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-3);">Results</span>
-            <h2 class="font-serif" style="font-size:34px; margin-top:6px;">Leaderboard</h2>
-        </div>
-        <span style="font-size:12px; color:var(--text-3);">Image (V) modality · Exact Match · Click to sort</span>
-    </div>
-    <div class="glass reveal" style="border-radius:12px; overflow:hidden;">
-        <table class="lb" style="width:100%; border-collapse:collapse;" id="leaderboard-table">
-            <thead>
-                <tr>
-                    <th style="width:36px; text-align:center;">#</th>
-                    <th style="text-align:left;">Model</th>
-                    <th>Size</th>
-                    <th class="sort-active" data-col="em" onclick="sortTable('em')">EM %</th>
-                    <th data-col="anls" onclick="sortTable('anls')">ANLS</th>
-                    <th data-col="flat" onclick="sortTable('flat')">Flat</th>
-                    <th data-col="nested" onclick="sortTable('nested')">Nested</th>
-                    <th data-col="table" onclick="sortTable('table')">Table</th>
-                    <th data-col="perfect" onclick="sortTable('perfect')">Perfect</th>
-                </tr>
-            </thead>
-            <tbody id="lb-body"></tbody>
-        </table>
-    </div>
-</section>
-
-<div class="section-line"></div>
-
-<!-- Examples -->
-<section id="examples" style="max-width:1100px; margin:0 auto; padding:48px 24px;">
-    <div class="reveal" style="margin-bottom:24px;">
-        <span class="mono" style="font-size:12px; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-3);">Gallery</span>
-        <h2 class="font-serif" style="font-size:34px; margin-top:6px;">Examples</h2>
-        <p style="font-size:14px; color:var(--text-2); margin-top:8px; max-width:560px;">
-            Documents from the benchmark. Click to see model scores.
-        </p>
-    </div>
-
-    <div id="examples-grid" style="display:grid; grid-template-columns:repeat(2,1fr); gap:16px;">
-        <!-- Populated by JS -->
-    </div>
-</section>
-
-<div class="section-line"></div>
-
-<!-- About -->
-<section id="about" style="max-width:1100px; margin:0 auto; padding:48px 24px;">
-    <div class="reveal" style="margin-bottom:20px;">
-        <span class="mono" style="font-size:12px; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-3);">Details</span>
-        <h2 class="font-serif" style="font-size:34px; margin-top:6px;">About the benchmark</h2>
-    </div>
-    <div style="display:flex; flex-direction:column; gap:2px;" class="reveal">
-        <div class="glass faq-item" style="border-radius:8px; overflow:hidden;">
-            <button onclick="toggleFaq(this)" style="width:100%; padding:16px 20px; background:none; border:none; cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-family:'DM Sans',sans-serif; text-align:left;">
-                <span style="font-size:14px; font-weight:600; color:var(--text-1);">How was the data created?</span>
-                <span style="color:var(--text-3); font-size:18px; transition:transform 0.3s;" class="faq-arrow">+</span>
-            </button>
-            <div style="max-height:0; overflow:hidden; transition:max-height 0.4s ease; padding:0 20px;">
-                <div style="padding-bottom:16px; font-size:13px; color:var(--text-2); line-height:1.7;">
-                    VAREX uses <strong>Reverse Annotation</strong>: instead of annotating existing documents, we start with fillable PDF templates, fill them with deterministic placeholders, use an LLM to discover a semantic schema, then inject realistic synthetic values. Because every value is programmatically written to a specific PDF widget, the ground truth is deterministic — no human annotation noise. A three-phase QA process (automated screening, frontier-model audit, expert human review) validates the schema mappings to ~98.5% field-level accuracy.
-                </div>
+<!-- ═══════════════════════ LEADERBOARD ═══════════════════════ -->
+<section id="leaderboard" class="section-alt" style="padding: 56px 0;">
+    <div class="container">
+        <div class="reveal" style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:20px;">
+            <div>
+                <span class="eyebrow">Results</span>
+                <h2 style="font-size: 30px; font-weight: 400; margin-top: 8px; color: var(--text-1);">Leaderboard</h2>
             </div>
+            <span style="font-size: 12px; color: var(--text-3);">Image (V) modality · Exact Match · Click to sort</span>
         </div>
-        <div class="glass faq-item" style="border-radius:8px; overflow:hidden;">
-            <button onclick="toggleFaq(this)" style="width:100%; padding:16px 20px; background:none; border:none; cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-family:'DM Sans',sans-serif; text-align:left;">
-                <span style="font-size:14px; font-weight:600; color:var(--text-1);">What document types are included?</span>
-                <span style="color:var(--text-3); font-size:18px; transition:transform 0.3s;" class="faq-arrow">+</span>
-            </button>
-            <div style="max-height:0; overflow:hidden; transition:max-height 0.4s ease; padding:0 20px;">
-                <div style="padding-bottom:16px; font-size:13px; color:var(--text-2); line-height:1.7;">
-                    1,798 single-page, English-language U.S. government forms from agencies including HUD, GSA, FDA, USCIS, and state departments. Forms range from simple 3-field applications to complex documents with nested sections and tabular regions. The benchmark comprises 301 Flat (17%), 1,162 Nested (64%), and 336 Table (19%) documents.
-                </div>
-            </div>
-        </div>
-        <div class="glass faq-item" style="border-radius:8px; overflow:hidden;">
-            <button onclick="toggleFaq(this)" style="width:100%; padding:16px 20px; background:none; border:none; cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-family:'DM Sans',sans-serif; text-align:left;">
-                <span style="font-size:14px; font-weight:600; color:var(--text-1);">How is scoring done?</span>
-                <span style="color:var(--text-3); font-size:18px; transition:transform 0.3s;" class="faq-arrow">+</span>
-            </button>
-            <div style="max-height:0; overflow:hidden; transition:max-height 0.4s ease; padding:0 20px;">
-                <div style="padding-bottom:16px; font-size:13px; color:var(--text-2); line-height:1.7;">
-                    Primary metric is <strong>Exact Match (EM)</strong>: a field scores 1 if the normalized prediction matches the ground truth exactly. We additionally report <strong>ANLS</strong> (Average Normalized Levenshtein Similarity) for partial credit. Array fields use <strong>order-invariant matching</strong> via the Hungarian algorithm — models aren't penalized for reading table rows in a different order. Scores are reported per structure category: VAREX-FLAT, VAREX-NESTED, and VAREX-TABLE.
-                </div>
-            </div>
-        </div>
-        <div class="glass faq-item" style="border-radius:8px; overflow:hidden;">
-            <button onclick="toggleFaq(this)" style="width:100%; padding:16px 20px; background:none; border:none; cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-family:'DM Sans',sans-serif; text-align:left;">
-                <span style="font-size:14px; font-weight:600; color:var(--text-1);">Who is this benchmark for?</span>
-                <span style="color:var(--text-3); font-size:18px; transition:transform 0.3s;" class="faq-arrow">+</span>
-            </button>
-            <div style="max-height:0; overflow:hidden; transition:max-height 0.4s ease; padding:0 20px;">
-                <div style="padding-bottom:16px; font-size:13px; color:var(--text-2); line-height:1.7;">
-                    VAREX most effectively discriminates models in the <strong>60–95% range</strong>, making it especially useful for practitioners building and fine-tuning small (≤4B) extraction models for cost-sensitive or on-device deployment. The benchmark diagnoses specific failure modes — schema echo, under-extraction, attention decay — that offer concrete targets for improvement. Above 95%, residual ground truth noise limits the precision of model-to-model comparisons.
-                </div>
-            </div>
-        </div>
-        <div class="glass faq-item" style="border-radius:8px; overflow:hidden;">
-            <button onclick="toggleFaq(this)" style="width:100%; padding:16px 20px; background:none; border:none; cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-family:'DM Sans',sans-serif; text-align:left;">
-                <span style="font-size:14px; font-weight:600; color:var(--text-1);">Known limitations</span>
-                <span style="color:var(--text-3); font-size:18px; transition:transform 0.3s;" class="faq-arrow">+</span>
-            </button>
-            <div style="max-height:0; overflow:hidden; transition:max-height 0.4s ease; padding:0 20px;">
-                <div style="padding-bottom:16px; font-size:13px; color:var(--text-2); line-height:1.7;">
-                    All documents are single-page, English-only, typed digital PDFs — no handwriting, scan artifacts, or multilingual content. Faker-generated values (e.g., 555-prefix phones) don't match real-world distributions. Table documents have a median of 3 rows, below enterprise scale. Nested documents dominate at 64%. The exact-match metric doesn't normalize name ordering or phone formats.
-                </div>
-            </div>
+        <div class="card reveal" style="overflow:hidden; padding:0;">
+            <table class="lb" id="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th style="width:42px; text-align:center;">#</th>
+                        <th style="text-align:left;">Model</th>
+                        <th>Size</th>
+                        <th class="sort-active" data-col="em" onclick="sortTable('em')">EM %</th>
+                        <th data-col="anls" onclick="sortTable('anls')">ANLS</th>
+                        <th data-col="flat" onclick="sortTable('flat')">Flat</th>
+                        <th data-col="nested" onclick="sortTable('nested')">Nested</th>
+                        <th data-col="table" onclick="sortTable('table')">Table</th>
+                        <th data-col="perfect" onclick="sortTable('perfect')">Perfect</th>
+                    </tr>
+                </thead>
+                <tbody id="lb-body"></tbody>
+            </table>
         </div>
     </div>
 </section>
 
-<div class="section-line"></div>
+<div class="section-divider"></div>
 
-<!-- Download & Cite -->
-<section id="download" style="max-width:1100px; margin:0 auto; padding:48px 24px 80px;">
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;" class="reveal">
-        <div class="glass" style="border-radius:12px; padding:28px 24px;">
-            <span class="mono" style="font-size:12px; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-3);">Get Started</span>
-            <h3 class="font-serif" style="font-size:24px; margin-top:6px; margin-bottom:18px;">Download</h3>
-            <div style="display:flex; flex-direction:column; gap:10px;">
-                <a href="#" style="display:block; padding:12px 16px; border-radius:8px; border:1px solid var(--border); text-decoration:none; color:var(--text-1); transition:all 0.15s;" onmouseenter="this.style.background='rgba(0,0,0,0.02)'" onmouseleave="this.style.background='transparent'">
-                    <div style="font-weight:600; font-size:14px;">📦 Dataset (HuggingFace)</div>
-                    <div style="font-size:12px; color:var(--text-3); margin-top:2px;">1,798 documents · schemas · GT · 4 modalities</div>
-                </a>
-                <a href="#" style="display:block; padding:12px 16px; border-radius:8px; border:1px solid var(--border); text-decoration:none; color:var(--text-1); transition:all 0.15s;" onmouseenter="this.style.background='rgba(0,0,0,0.02)'" onmouseleave="this.style.background='transparent'">
-                    <div style="font-weight:600; font-size:14px;">⌨ Evaluation Code (GitHub)</div>
-                    <div style="font-size:12px; color:var(--text-3); margin-top:2px;">Scorer with order-invariant array matching</div>
-                </a>
-                <a href="#" style="display:block; padding:12px 16px; border-radius:8px; border:1px solid var(--border); text-decoration:none; color:var(--text-1); transition:all 0.15s;" onmouseenter="this.style.background='rgba(0,0,0,0.02)'" onmouseleave="this.style.background='transparent'">
-                    <div style="font-weight:600; font-size:14px;">📄 Paper (ArXiv)</div>
-                    <div style="font-size:12px; color:var(--text-3); margin-top:2px;">Full methodology and analysis</div>
-                </a>
-            </div>
+<!-- ═══════════════════════ EXAMPLES ═══════════════════════ -->
+<section id="examples" style="padding: 56px 0;">
+    <div class="container">
+        <div class="reveal" style="margin-bottom: 28px;">
+            <span class="eyebrow">Gallery</span>
+            <h2 style="font-size: 30px; font-weight: 400; margin-top: 8px; color: var(--text-1);">Examples</h2>
+            <p style="font-size: 14px; color: var(--text-2); margin-top: 8px;">
+                Documents from the benchmark. Click to see model scores.
+            </p>
         </div>
 
-        <div class="glass" style="border-radius:12px; padding:28px 24px;">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <span class="mono" style="font-size:12px; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-3);">Reference</span>
-                    <h3 class="font-serif" style="font-size:24px; margin-top:6px;">Citation</h3>
-                </div>
-                <button onclick="copyBib()" id="bib-btn" style="background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:5px 14px; font-size:12px; cursor:pointer; color:var(--text-2); font-family:'DM Sans',sans-serif; font-weight:500; transition:all 0.2s;">
-                    Copy BibTeX
+        <div id="examples-grid" style="display:grid; grid-template-columns:repeat(2,1fr); gap:16px;">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════ ABOUT / FAQ ═══════════════════════ -->
+<section id="about" class="section-alt" style="padding: 56px 0;">
+    <div class="container">
+        <div class="reveal" style="margin-bottom: 24px;">
+            <span class="eyebrow">Details</span>
+            <h2 style="font-size: 30px; font-weight: 400; margin-top: 8px; color: var(--text-1);">About the benchmark</h2>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:2px;" class="reveal">
+            <div class="faq-item">
+                <button class="faq-btn" onclick="toggleFaq(this)">
+                    <span style="font-size:14px; font-weight:500; color:var(--text-1);">How was the data created?</span>
+                    <span style="color:var(--text-3); font-size:20px; line-height:1;" class="faq-arrow">+</span>
                 </button>
+                <div style="max-height:0; overflow:hidden; transition:max-height 0.4s ease; padding:0 20px;">
+                    <div style="padding-bottom:16px; font-size:13px; color:var(--text-2); line-height:1.75;">
+                        VAREX uses <strong>Reverse Annotation</strong>: instead of annotating existing documents, we start with fillable PDF templates, fill them with deterministic placeholders, use an LLM to discover a semantic schema, then inject realistic synthetic values. Because every value is programmatically written to a specific PDF widget, the ground truth is deterministic — no human annotation noise. A three-phase QA process (automated screening, frontier-model audit, expert human review) validates the schema mappings to ~98.5% field-level accuracy.
+                    </div>
+                </div>
             </div>
-            <pre class="mono" style="background:var(--bg); border-radius:8px; padding:16px 18px; font-size:11px; color:var(--text-2); border:1px solid var(--border); overflow:auto; margin-top:18px; line-height:1.7;" id="bibtex">@inproceedings{varex2026,
+            <div class="faq-item">
+                <button class="faq-btn" onclick="toggleFaq(this)">
+                    <span style="font-size:14px; font-weight:500; color:var(--text-1);">What document types are included?</span>
+                    <span style="color:var(--text-3); font-size:20px; line-height:1;" class="faq-arrow">+</span>
+                </button>
+                <div style="max-height:0; overflow:hidden; transition:max-height 0.4s ease; padding:0 20px;">
+                    <div style="padding-bottom:16px; font-size:13px; color:var(--text-2); line-height:1.75;">
+                        1,798 single-page, English-language U.S. government forms from agencies including HUD, GSA, FDA, USCIS, and state departments. Forms range from simple 3-field applications to complex documents with nested sections and tabular regions. The benchmark comprises 301 Flat (17%), 1,162 Nested (64%), and 336 Table (19%) documents.
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-btn" onclick="toggleFaq(this)">
+                    <span style="font-size:14px; font-weight:500; color:var(--text-1);">How is scoring done?</span>
+                    <span style="color:var(--text-3); font-size:20px; line-height:1;" class="faq-arrow">+</span>
+                </button>
+                <div style="max-height:0; overflow:hidden; transition:max-height 0.4s ease; padding:0 20px;">
+                    <div style="padding-bottom:16px; font-size:13px; color:var(--text-2); line-height:1.75;">
+                        Primary metric is <strong>Exact Match (EM)</strong>: a field scores 1 if the normalized prediction matches the ground truth exactly. We additionally report <strong>ANLS</strong> (Average Normalized Levenshtein Similarity) for partial credit. Array fields use <strong>order-invariant matching</strong> via the Hungarian algorithm — models aren't penalized for reading table rows in a different order. Scores are reported per structure category: VAREX-FLAT, VAREX-NESTED, and VAREX-TABLE.
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-btn" onclick="toggleFaq(this)">
+                    <span style="font-size:14px; font-weight:500; color:var(--text-1);">Who is this benchmark for?</span>
+                    <span style="color:var(--text-3); font-size:20px; line-height:1;" class="faq-arrow">+</span>
+                </button>
+                <div style="max-height:0; overflow:hidden; transition:max-height 0.4s ease; padding:0 20px;">
+                    <div style="padding-bottom:16px; font-size:13px; color:var(--text-2); line-height:1.75;">
+                        VAREX most effectively discriminates models in the <strong>60–95% range</strong>, making it especially useful for practitioners building and fine-tuning small (≤4B) extraction models for cost-sensitive or on-device deployment. The benchmark diagnoses specific failure modes — schema echo, under-extraction, attention decay — that offer concrete targets for improvement. Above 95%, residual ground truth noise limits the precision of model-to-model comparisons.
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-btn" onclick="toggleFaq(this)">
+                    <span style="font-size:14px; font-weight:500; color:var(--text-1);">Known limitations</span>
+                    <span style="color:var(--text-3); font-size:20px; line-height:1;" class="faq-arrow">+</span>
+                </button>
+                <div style="max-height:0; overflow:hidden; transition:max-height 0.4s ease; padding:0 20px;">
+                    <div style="padding-bottom:16px; font-size:13px; color:var(--text-2); line-height:1.75;">
+                        All documents are single-page, English-only, typed digital PDFs — no handwriting, scan artifacts, or multilingual content. Faker-generated values (e.g., 555-prefix phones) don't match real-world distributions. Table documents have a median of 3 rows, below enterprise scale. Nested documents dominate at 64%. The exact-match metric doesn't normalize name ordering or phone formats.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════ DOWNLOAD & CITE ═══════════════════════ -->
+<section id="download" style="padding: 56px 0 80px;">
+    <div class="container">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;" class="reveal">
+            <!-- Download -->
+            <div class="card" style="padding: 32px 28px;">
+                <span class="eyebrow">Get Started</span>
+                <h3 style="font-size: 22px; font-weight: 400; margin-top: 8px; margin-bottom: 20px; color:var(--text-1);">Download</h3>
+                <div style="display:flex; flex-direction:column; gap:2px;">
+                    <a href="#" style="display:block; padding:12px 16px; border-radius:8px; border:1px solid var(--border); text-decoration:none; color:var(--text-1); transition:background 0.15s, border-color 0.15s;" onmouseenter="this.style.background='var(--bg-alt)'; this.style.borderColor='var(--blue)'" onmouseleave="this.style.background=''; this.style.borderColor='var(--border)'">
+                        <div style="font-weight:500; font-size:14px; display:flex; align-items:center; gap:8px; color:var(--blue);">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-2.18c.07-.44.18-.88.18-1.36C18 2.07 15.93 0 13.36 0c-1.28 0-2.43.5-3.28 1.3L9 2.5 7.92 1.3C7.07.5 5.92 0 4.64 0 2.07 0 0 2.07 0 4.64c0 .48.11.92.18 1.36H0c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg>
+                            Dataset (HuggingFace)
+                        </div>
+                        <div style="font-size:12px; color:var(--text-3); margin-top:3px; margin-left:24px;">1,798 documents · schemas · GT · 4 modalities</div>
+                    </a>
+                    <a href="#" style="display:block; padding:12px 16px; border-radius:8px; border:1px solid var(--border); text-decoration:none; color:var(--text-1); transition:background 0.15s, border-color 0.15s;" onmouseenter="this.style.background='var(--bg-alt)'; this.style.borderColor='var(--blue)'" onmouseleave="this.style.background=''; this.style.borderColor='var(--border)'">
+                        <div style="font-weight:500; font-size:14px; display:flex; align-items:center; gap:8px; color:var(--blue);">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+                            Evaluation Code (GitHub)
+                        </div>
+                        <div style="font-size:12px; color:var(--text-3); margin-top:3px; margin-left:24px;">Scorer with order-invariant array matching</div>
+                    </a>
+                    <a href="#" style="display:block; padding:12px 16px; border-radius:8px; border:1px solid var(--border); text-decoration:none; color:var(--text-1); transition:background 0.15s, border-color 0.15s;" onmouseenter="this.style.background='var(--bg-alt)'; this.style.borderColor='var(--blue)'" onmouseleave="this.style.background=''; this.style.borderColor='var(--border)'">
+                        <div style="font-weight:500; font-size:14px; display:flex; align-items:center; gap:8px; color:var(--blue);">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>
+                            Paper (ArXiv)
+                        </div>
+                        <div style="font-size:12px; color:var(--text-3); margin-top:3px; margin-left:24px;">Full methodology and analysis</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Citation -->
+            <div class="card" style="padding: 32px 28px;">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                    <div>
+                        <span class="eyebrow">Reference</span>
+                        <h3 style="font-size: 22px; font-weight: 400; margin-top: 8px; color:var(--text-1);">Citation</h3>
+                    </div>
+                    <button onclick="copyBib()" id="bib-btn" style="background:var(--bg-alt); border:1px solid var(--border-strong); border-radius:4px; padding:6px 16px; font-size:13px; font-weight:500; cursor:pointer; color:var(--blue); font-family:'IBM Plex Sans',sans-serif; transition:all 0.2s; margin-top:4px;">
+                        Copy BibTeX
+                    </button>
+                </div>
+                <pre class="mono code-block" style="margin-top: 20px;" id="bibtex">@inproceedings{varex2026,
   title  = {VAREX: A Benchmark for Multi-Modal
             Structured Extraction from Documents},
   author = {Anonymous},
   year   = {2026}
 }</pre>
+            </div>
         </div>
     </div>
 </section>
 
-<footer style="border-top:1px solid var(--border); padding:24px 0; text-align:center;">
-    <p style="font-size:12px; color:var(--text-3);">VAREX-Bench · 2026</p>
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<footer style="border-top:1px solid var(--border); padding:24px 0; background:var(--bg-alt);">
+    <div class="container" style="display:flex; justify-content:space-between; align-items:center;">
+        <div style="display:flex; align-items:center; gap:10px;">
+        <span style="font-size: 12px; color:var(--text-3);">VAREX-Bench · 2026</span>
+        </div>
+        <span style="font-size: 12px; color:var(--text-4);">IBM Research</span>
+    </div>
 </footer>
 
+<!-- Lightbox -->
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    <img id="lightbox-img" src="" alt="Enlarged document" onclick="event.stopPropagation()">
+</div>
+
 <script>
-// Leaderboard data
+function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+// ── Leaderboard data ──────────────────────────────────────────
 const models = [
-    { model:"Gemini 2.5 Pro", size:"API", em:97.8, anls:98.4, flat:97.3, nested:98.1, table:97.4, perfect:82.6, cat:"frontier" },
-    { model:"Gemini 2.5 Flash", size:"API", em:97.2, anls:97.8, flat:96.8, nested:97.6, table:96.3, perfect:80.8, cat:"frontier" },
-    { model:"Qwen3-VL", size:"8B", em:96.6, anls:97.5, flat:96.6, nested:97.3, table:94.9, perfect:78.0, cat:"large" },
-    { model:"Llama 4 Maverick", size:"17B×128E", em:95.5, anls:97.0, flat:95.0, nested:96.1, table:94.2, perfect:68.5, cat:"large" },
-    { model:"Ministral", size:"14B", em:94.7, anls:96.4, flat:94.8, nested:95.1, table:93.8, perfect:65.9, cat:"large" },
-    { model:"GPT-4o", size:"API", em:94.7, anls:97.0, flat:95.0, nested:95.2, table:93.4, perfect:64.2, cat:"frontier" },
-    { model:"Llama 4 Scout", size:"17B×16E", em:94.3, anls:95.7, flat:95.2, nested:94.3, table:94.1, perfect:63.2, cat:"large" },
-    { model:"NuExtract 2.0", size:"2B", em:90.8, anls:92.0, flat:93.1, nested:91.8, table:87.4, perfect:52.6, cat:"small" },
-    { model:"InternVL3.5", size:"2B", em:85.5, anls:89.0, flat:89.4, nested:86.1, table:82.6, perfect:42.3, cat:"small" },
-    { model:"Qwen 2.5-VL", size:"3B", em:82.5, anls:85.5, flat:80.0, nested:83.1, table:82.0, perfect:43.8, cat:"small" },
-    { model:"Gemma 3n", size:"E2B", em:70.8, anls:77.9, flat:76.6, nested:70.9, table:68.5, perfect:19.0, cat:"small" },
-    { model:"MiniCPM-V4", size:"4B", em:67.7, anls:69.6, flat:84.8, nested:66.0, table:65.0, perfect:23.6, cat:"small" },
-    { model:"Gemma 3", size:"4B", em:65.1, anls:74.7, flat:71.6, nested:64.9, table:63.2, perfect:13.6, cat:"small" },
-    { model:"h2oVL Miss.", size:"2B", em:61.0, anls:64.6, flat:67.1, nested:61.1, table:58.5, perfect:11.6, cat:"small" },
-    { model:"Qwen3-VL", size:"2B", em:34.4, anls:34.9, flat:93.3, nested:26.9, table:29.7, perfect:29.4, cat:"low" },
-    { model:"h2oVL Miss.", size:"800M", em:34.1, anls:36.0, flat:35.9, nested:33.1, table:35.9, perfect:5.9, cat:"low" },
-    { model:"InternVL3.5", size:"1B", em:28.1, anls:29.7, flat:78.9, nested:22.4, table:21.9, perfect:11.2, cat:"low" },
-    { model:"Qwen2-VL", size:"2B", em:9.7, anls:9.9, flat:16.5, nested:9.0, table:8.8, perfect:4.3, cat:"low" },
+    { model:"Gemini 2.5 Pro",    size:"API",        em:97.8, anls:98.4, flat:97.3, nested:98.1, table:97.4, perfect:82.6, cat:"frontier" },
+    { model:"Gemini 2.5 Flash",  size:"API",        em:97.2, anls:97.8, flat:96.8, nested:97.6, table:96.3, perfect:80.8, cat:"frontier" },
+    { model:"Qwen3-VL",          size:"8B",         em:96.6, anls:97.5, flat:96.6, nested:97.3, table:94.9, perfect:78.0, cat:"large" },
+    { model:"Llama 4 Maverick",  size:"17B×128E",   em:95.5, anls:97.0, flat:95.0, nested:96.1, table:94.2, perfect:68.5, cat:"large" },
+    { model:"Ministral",         size:"14B",        em:94.7, anls:96.4, flat:94.8, nested:95.1, table:93.8, perfect:65.9, cat:"large" },
+    { model:"GPT-4o",            size:"API",        em:94.7, anls:97.0, flat:95.0, nested:95.2, table:93.4, perfect:64.2, cat:"frontier" },
+    { model:"Llama 4 Scout",     size:"17B×16E",    em:94.3, anls:95.7, flat:95.2, nested:94.3, table:94.1, perfect:63.2, cat:"large" },
+    { model:"NuExtract 2.0",     size:"2B",         em:90.8, anls:92.0, flat:93.1, nested:91.8, table:87.4, perfect:52.6, cat:"small" },
+    { model:"InternVL3.5",       size:"2B",         em:85.5, anls:89.0, flat:89.4, nested:86.1, table:82.6, perfect:42.3, cat:"small" },
+    { model:"Qwen 2.5-VL",       size:"3B",         em:82.5, anls:85.5, flat:80.0, nested:83.1, table:82.0, perfect:43.8, cat:"small" },
+    { model:"Gemma 3n",          size:"E2B",        em:70.8, anls:77.9, flat:76.6, nested:70.9, table:68.5, perfect:19.0, cat:"small" },
+    { model:"MiniCPM-V4",        size:"4B",         em:67.7, anls:69.6, flat:84.8, nested:66.0, table:65.0, perfect:23.6, cat:"small" },
+    { model:"Gemma 3",           size:"4B",         em:65.1, anls:74.7, flat:71.6, nested:64.9, table:63.2, perfect:13.6, cat:"small" },
+    { model:"h2oVL Miss.",       size:"2B",         em:61.0, anls:64.6, flat:67.1, nested:61.1, table:58.5, perfect:11.6, cat:"small" },
+    { model:"Qwen3-VL",          size:"2B",         em:34.4, anls:34.9, flat:93.3, nested:26.9, table:29.7, perfect:29.4, cat:"low" },
+    { model:"h2oVL Miss.",       size:"800M",       em:34.1, anls:36.0, flat:35.9, nested:33.1, table:35.9, perfect:5.9,  cat:"low" },
+    { model:"InternVL3.5",       size:"1B",         em:28.1, anls:29.7, flat:78.9, nested:22.4, table:21.9, perfect:11.2, cat:"low" },
+    { model:"Qwen2-VL",          size:"2B",         em:9.7,  anls:9.9,  flat:16.5, nested:9.0,  table:8.8,  perfect:4.3,  cat:"low" },
 ];
 
 const catStyles = {
-    frontier: { bg:"#e8f4f4", color:"#0d7377", label:"Frontier" },
-    large: { bg:"#e8eef4", color:"#3d5a80", label:"Open ≥8B" },
-    small: { bg:"#f5f0e0", color:"#8b6914", label:"2–4B" },
-    low: { bg:"#f4e8e7", color:"#c44536", label:"≤2B" },
+    frontier: { chip:"chip-blue",   label:"Frontier" },
+    large:    { chip:"chip-green",  label:"Open ≥8B" },
+    small:    { chip:"chip-yellow", label:"2–4B" },
+    low:      { chip:"chip-red",    label:"≤2B" },
 };
 
 function scoreColor(v) {
-    if (v >= 90) return 'var(--teal)';
-    if (v >= 70) return 'var(--amber)';
-    if (v >= 50) return '#8b6914';
-    return 'var(--coral)';
+    if (v >= 90) return 'var(--green)';
+    if (v >= 70) return 'var(--yellow)';
+    if (v >= 50) return '#B06000';
+    return 'var(--red)';
 }
 
-let currentSort = null; // null = grouped by category (default)
+let currentSort = null;
 function sortTable(col) {
-    currentSort = currentSort === col ? null : col; // toggle: click same col resets to grouped
+    currentSort = currentSort === col ? null : col;
     renderLeaderboard();
     document.querySelectorAll('.lb th').forEach(th => {
         th.classList.toggle('sort-active', th.dataset.col === col && currentSort === col);
@@ -757,66 +866,63 @@ function sortTable(col) {
 function renderLeaderboard() {
     const catOrder = ['frontier','large','small','low'];
     const catLabels = { frontier:'Frontier APIs', large:'Large Open (≥8B)', small:'Small VLMs (2–4B)', low:'Low-capacity (≤2B)' };
+    const tbody = document.getElementById('lb-body');
+    let html = '';
 
-    let rows;
     if (currentSort) {
-        rows = [...models].sort((a,b) => b[currentSort] - a[currentSort]);
-        const tbody = document.getElementById('lb-body');
-        tbody.innerHTML = rows.map((m, i) => renderRow(m, i+1)).join('');
+        const rows = [...models].sort((a,b) => b[currentSort] - a[currentSort]);
+        rows.forEach((m, i) => { html += renderRow(m, i+1); });
     } else {
-        // Grouped by category
-        const tbody = document.getElementById('lb-body');
-        let html = '';
         let rank = 1;
         catOrder.forEach(cat => {
             const group = models.filter(m => m.cat === cat).sort((a,b) => b.em - a.em);
-            if (group.length === 0) return;
-            html += `<tr><td colspan="9" style="padding:8px 12px; font-size:11px; font-weight:600; color:var(--text-3); background:rgba(0,0,0,0.02); border-bottom:1px solid var(--border); text-align:left; letter-spacing:0.03em;">${catLabels[cat]}</td></tr>`;
+            if (!group.length) return;
+            html += `<tr><td colspan="9" style="padding:8px 14px; font-size:11px; font-weight:500; color:var(--text-3); background:var(--bg-alt); border-bottom:1px solid var(--border); text-align:left; letter-spacing:0.05em; text-transform:uppercase;">${catLabels[cat]}</td></tr>`;
             group.forEach(m => { html += renderRow(m, rank++); });
         });
-        tbody.innerHTML = html;
     }
+    tbody.innerHTML = html;
 }
 
 function renderRow(m, rank) {
     const c = catStyles[m.cat];
     const cols = ['em','anls','flat','nested','table','perfect'];
     return `<tr>
-        <td class="mono" style="color:var(--text-3); font-size:12px; text-align:center;">${rank}</td>
+        <td class="mono" style="color:var(--text-4); font-size:12px; text-align:center;">${rank}</td>
         <td style="text-align:left;">
             <span class="model-name">${m.model}</span>
-            <span class="cat-tag" style="background:${c.bg}; color:${c.color};">${c.label}</span>
+            <span class="chip ${c.chip} cat-tag">${c.label}</span>
         </td>
         <td class="model-size">${m.size}</td>
-        ${cols.map(c => `<td class="mono" style="font-size:13px; font-weight:500; color:${scoreColor(m[c])};">${m[c].toFixed(1)}</td>`).join('')}
+        ${cols.map(col => `<td class="mono" style="font-size:13px; font-weight:500; color:${scoreColor(m[col])};">${m[col].toFixed(1)}</td>`).join('')}
     </tr>`;
 }
 
-// Examples
+// ── Examples ──────────────────────────────────────────────────
 const examples = [
     {
         id: "opm1655", title: "Spatial text vs. image input", tag: "Table · 22 fields",
         desc: "Same model, same document, different input. Qwen3-VL 8B extracts 91% of fields correctly from spatial text but only 46% from the rendered image.",
         scores: { "Gemini 2.5 Pro": 100, "Qwen3-VL 8B (S)": 90.9, "Qwen3-VL 8B (V)": 45.5, "NuExtract 2B": 86.4 },
-        color: "var(--slate)"
+        accent: "#1A73E8"
     },
     {
         id: "lab167os", title: "Output format failure at 2B", tag: "Table · 50 fields",
         desc: "Qwen3-VL 2B returns the schema definition back instead of filling it with values. On non-echo documents, the same model reaches 92%.",
         scores: { "Gemini 2.5 Pro": 100, "Qwen3-VL 8B": 98, "Qwen3-VL 2B": 0, "NuExtract 2B": 42 },
-        color: "var(--coral)"
+        accent: "#EA4335"
     },
     {
         id: "wh521", title: "Base model vs. fine-tuned", tag: "Nested · 11 fields",
         desc: "NuExtract 2B is fine-tuned from Qwen2-VL 2B. The base model scores 0% on this form. The fine-tuned version scores 100%. Same architecture, same parameter count.",
         scores: { "Gemini 2.5 Pro": 100, "NuExtract 2B": 100, "Qwen2-VL 2B": 0, "InternVL3.5 2B": 100 },
-        color: "var(--plum)"
+        accent: "#34A853"
     },
     {
         id: "92210.1", title: "A clean form, an imperfect result", tag: "Table · 15 fields",
         desc: "Gemini 2.5 Pro misreads a field on this straightforward form. No model achieves 100% across the full benchmark — 133 documents remain unsolved.",
         scores: { "Gemini 2.5 Pro": 93, "Qwen3-VL 8B": 100, "NuExtract 2B": 86, "InternVL3.5 2B": 79 },
-        color: "var(--amber)"
+        accent: "#F9AB00"
     },
 ];
 
@@ -824,27 +930,27 @@ function renderExamples() {
     const grid = document.getElementById('examples-grid');
     grid.innerHTML = examples.map((ex, i) => {
         const scoreRows = Object.entries(ex.scores).map(([name, score]) =>
-            `<div style="display:flex; justify-content:space-between; align-items:center; padding:4px 0;">
+            `<div style="display:flex; justify-content:space-between; align-items:center; padding:5px 0; border-bottom:1px solid var(--border);">
                 <span style="font-size:12px; color:var(--text-2);">${name}</span>
                 <span class="mono" style="font-size:13px; font-weight:500; color:${scoreColor(score)};">${score.toFixed(1)}</span>
             </div>`
         ).join('');
 
-        return `<div class="glass example-card reveal" style="border-radius:10px; overflow:hidden;" onclick="toggleExample(${i})">
-            <div style="height:180px; background:var(--bg); display:flex; align-items:center; justify-content:center; border-bottom:1px solid var(--border); position:relative; overflow:hidden;">
-                <img src="images/examples/${ex.id}.png" alt="${ex.title}" style="height:100%; width:100%; object-fit:contain; padding:8px;">
+        return `<div class="card example-card reveal" style="overflow:hidden; padding:0;" onclick="toggleExample(${i})">
+            <div style="height:180px; background:var(--bg-alt); display:flex; align-items:center; justify-content:center; border-bottom:1px solid var(--border); position:relative; overflow:hidden; cursor:zoom-in;" onclick="event.stopPropagation(); openLightbox('images/examples/${ex.id}.png')">
+                <img src="images/examples/${ex.id}.png" alt="${ex.title}" style="height:100%; width:100%; object-fit:contain; padding:8px;" loading="lazy">
+                <div style="position:absolute; top:0; left:0; bottom:0; width:4px; background:${ex.accent};"></div>
             </div>
-            <div style="padding:16px 18px;">
-                <div style="display:flex; align-items:center; gap:8px;">
-                    <div style="width:4px; height:16px; border-radius:2px; background:${ex.color};"></div>
-                    <h3 style="font-size:15px; font-weight:600;">${ex.title}</h3>
-                </div>
-                <p style="font-size:12px; color:var(--text-2); margin-top:8px; line-height:1.6;">${ex.desc}</p>
+            <div style="padding:18px 20px;">
+                <h3 style="font-size:14px; font-weight:500; color:var(--text-1); line-height:1.3;">${ex.title}</h3>
+                <p style="font-size:12px; color:var(--text-2); margin-top:8px; line-height:1.65;">${ex.desc}</p>
                 <div style="margin-top:10px;">
-                    <span class="mono" style="font-size:10px; padding:3px 8px; border-radius:4px; background:var(--bg); color:var(--text-3); border:1px solid var(--border);">${ex.tag}</span>
+                    <span class="mono" style="font-size:10px; padding:3px 8px; border-radius:100px; background:var(--bg-alt); color:var(--text-3); border:1px solid var(--border);">${ex.tag}</span>
                 </div>
-                <div class="example-detail" id="detail-${i}" style="margin-top:12px; border-top:1px solid var(--border); padding-top:12px;">
-                    ${scoreRows}
+                <div class="example-detail" id="detail-${i}" style="margin-top:12px;">
+                    <div style="border-top:1px solid var(--border); padding-top:12px;">
+                        ${scoreRows}
+                    </div>
                 </div>
             </div>
         </div>`;
@@ -852,8 +958,7 @@ function renderExamples() {
 }
 
 function toggleExample(i) {
-    const el = document.getElementById('detail-' + i);
-    el.classList.toggle('open');
+    document.getElementById('detail-' + i).classList.toggle('open');
 }
 
 function toggleFaq(btn) {
@@ -862,29 +967,23 @@ function toggleFaq(btn) {
     const isOpen = content.style.maxHeight && content.style.maxHeight !== '0px';
     content.style.maxHeight = isOpen ? '0px' : content.scrollHeight + 'px';
     arrow.textContent = isOpen ? '+' : '−';
-    arrow.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(0deg)';
+    btn.style.background = isOpen ? '' : 'var(--blue-light)';
 }
 
 function switchMod(tab) {
-    // Hide all panels
     document.querySelectorAll('.mod-content').forEach(el => {
         el.style.opacity = '0';
         el.style.pointerEvents = 'none';
         el.style.position = 'absolute';
     });
-    // Show selected
     const panel = document.getElementById('mod-' + tab);
     panel.style.opacity = '1';
     panel.style.pointerEvents = 'auto';
     panel.style.position = 'relative';
 
-    // Update tab styles
     document.querySelectorAll('.mod-tab').forEach(btn => {
         const isActive = btn.dataset.tab === tab;
-        btn.style.color = isActive ? 'var(--text-1)' : 'var(--text-3)';
-        btn.style.fontWeight = isActive ? '600' : '500';
-        btn.style.background = isActive ? 'var(--bg-card)' : 'transparent';
-        btn.style.borderBottomColor = isActive ? 'var(--accent)' : 'transparent';
+        btn.classList.toggle('active-tab', isActive);
     });
 }
 
@@ -893,9 +992,9 @@ function copyBib() {
     navigator.clipboard.writeText(text);
     const btn = document.getElementById('bib-btn');
     btn.textContent = '✓ Copied';
-    btn.style.background = '#e8f4f4';
-    btn.style.borderColor = '#0d7377';
-    btn.style.color = '#0d7377';
+    btn.style.background = 'var(--blue-light)';
+    btn.style.borderColor = 'var(--blue)';
+    btn.style.color = 'var(--blue)';
     setTimeout(() => {
         btn.textContent = 'Copy BibTeX';
         btn.style.background = '';
@@ -905,9 +1004,10 @@ function copyBib() {
 }
 
 // Scroll reveal
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+const observer = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); }),
+    { threshold: 0.08, rootMargin: '0px 0px -32px 0px' }
+);
 
 // Init
 renderLeaderboard();
@@ -916,6 +1016,5 @@ setTimeout(() => {
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 }, 100);
 </script>
-
 </body>
 </html>
