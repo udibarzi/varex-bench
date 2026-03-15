@@ -774,7 +774,7 @@ const models = [
     { model:"Ministral",         size:"14B",        em:94.8, anls:96.5, flat:94.8, nested:95.1, table:94.0, perfect:66.0, cat:"large" },
     { model:"GPT-4o",            size:"API",        em:94.8, anls:97.1, flat:95.1, nested:95.3, table:93.5, perfect:64.3, cat:"frontier" },
     { model:"Llama 4 Scout",     size:"17B×16E",    em:94.3, anls:95.8, flat:95.2, nested:94.3, table:94.1, perfect:63.4, cat:"large" },
-    { model:"NuExtract 2.0",     size:"2B",         em:90.8, anls:92.1, flat:93.1, nested:91.9, table:87.3, perfect:52.7, cat:"small" },
+    { model:"NuExtract 2.0",     size:"2B",         em:90.8, anls:92.1, flat:93.1, nested:91.9, table:87.3, perfect:52.7, cat:"small", note:"†Fine-tuned for structured extraction; base model (Qwen2-VL 2B) scores 9.7%" },
     { model:"InternVL3.5",       size:"2B",         em:85.6, anls:89.1, flat:89.6, nested:86.1, table:82.7, perfect:42.4, cat:"small" },
     { model:"Qwen 2.5-VL",       size:"3B",         em:82.5, anls:85.4, flat:79.9, nested:83.1, table:81.9, perfect:43.7, cat:"small" },
     { model:"Gemma 3n",          size:"E2B",        em:71.0, anls:78.1, flat:76.7, nested:71.0, table:68.8, perfect:19.0, cat:"small" },
@@ -834,11 +834,13 @@ function renderLeaderboard() {
 function renderRow(m, rank) {
     const c = catStyles[m.cat];
     const cols = ['em','anls','flat','nested','table','perfect'];
+    const note = m.note ? `<span style="font-size:10px; color:var(--text-3); display:block; margin-top:1px;">${m.note}</span>` : '';
     return `<tr>
         <td class="mono" style="color:var(--text-4); font-size:12px; text-align:center;">${rank}</td>
         <td style="text-align:left;">
             <span class="model-name">${m.model}</span>
             <span class="chip ${c.chip} cat-tag">${c.label}</span>
+            ${note}
         </td>
         <td class="model-size">${m.size}</td>
         ${cols.map(col => `<td class="mono" style="font-size:13px; font-weight:500; color:${scoreColor(m[col])};">${m[col].toFixed(1)}</td>`).join('')}
