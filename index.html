@@ -161,7 +161,7 @@
         .sc-mid  { color: var(--yellow); }
         .sc-low  { color: var(--red); }
 
-        /* Model Results */
+        /* Leaderboard */
         .lb { width: 100%; border-collapse: collapse; }
         .lb th {
             font-family: 'IBM Plex Mono', monospace;
@@ -765,7 +765,7 @@ function closeLightbox() {
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
-// ── Model Results data ──────────────────────────────────────────
+// ── Leaderboard data ──────────────────────────────────────────
 const models = [
     { model:"Gemini 2.5 Pro",    size:"API",        em:98.0, anls:98.5, flat:97.3, nested:98.2, table:97.7, perfect:82.8, cat:"frontier" },
     { model:"Gemini 2.5 Flash",  size:"API",        em:97.3, anls:97.9, flat:96.9, nested:97.7, table:96.5, perfect:81.0, cat:"frontier" },
@@ -804,13 +804,13 @@ function scoreColor(v) {
 let currentSort = null;
 function sortTable(col) {
     currentSort = currentSort === col ? null : col;
-    renderModel Results();
+    renderLeaderboard();
     document.querySelectorAll('.lb th').forEach(th => {
         th.classList.toggle('sort-active', th.dataset.col === col && currentSort === col);
     });
 }
 
-function renderModel Results() {
+function renderLeaderboard() {
     const catOrder = ['frontier','large','small','low'];
     const catLabels = { frontier:'Frontier APIs', large:'Large Open (≥8B)', small:'Small VLMs (2–4B)', low:'Low-capacity (≤2B)' };
     const tbody = document.getElementById('lb-body');
@@ -960,7 +960,7 @@ const observer = new IntersectionObserver(
 );
 
 // Init
-renderModel Results();
+renderLeaderboard();
 renderExamples();
 setTimeout(() => {
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
