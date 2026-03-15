@@ -332,7 +332,7 @@
                 A benchmark for multi-modal structured extraction from documents
             </p>
             <p class="fade-up d3" style="font-size: 15px; line-height: 1.75; color: var(--text-2); margin-top: 20px; max-width: 560px;">
-                1,798 government forms with unique per-document schemas, evaluated across four input modalities.
+                1,777 government forms with unique per-document schemas, evaluated across four input modalities.
                 Built for diagnosing where small models (≤4B) fail — and how to fix them.
             </p>
             <div class="fade-up d4" style="display:flex; gap:10px; margin-top:32px; flex-wrap:wrap; align-items:center;">
@@ -358,17 +358,17 @@
     <div class="container">
         <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px;">
             <div class="card reveal" style="padding: 24px 20px;">
-                <div style="font-size: 36px; font-weight: 300; color: var(--blue); line-height:1;">1,798</div>
+                <div style="font-size: 36px; font-weight: 300; color: var(--blue); line-height:1;">1,777</div>
                 <div style="font-size: 14px; font-weight: 500; color: var(--text-1); margin-top: 6px;">Documents</div>
                 <div style="font-size: 12px; color: var(--text-3); margin-top: 3px;">single-page government forms</div>
             </div>
             <div class="card reveal" style="padding: 24px 20px;">
-                <div style="font-size: 36px; font-weight: 300; color: var(--blue); line-height:1;">1,793</div>
+                <div style="font-size: 36px; font-weight: 300; color: var(--blue); line-height:1;">1,771</div>
                 <div style="font-size: 14px; font-weight: 500; color: var(--text-1); margin-top: 6px;">Unique Schemas</div>
                 <div style="font-size: 12px; color: var(--text-3); margin-top: 3px;">per-document extraction targets</div>
             </div>
             <div class="card reveal" style="padding: 24px 20px;">
-                <div style="font-size: 36px; font-weight: 300; color: var(--blue); line-height:1;">21,261</div>
+                <div style="font-size: 36px; font-weight: 300; color: var(--blue); line-height:1;">21,084</div>
                 <div style="font-size: 14px; font-weight: 500; color: var(--text-1); margin-top: 6px;">Evaluation Fields</div>
                 <div style="font-size: 12px; color: var(--text-3); margin-top: 3px;">validated through 3-phase QA</div>
             </div>
@@ -443,10 +443,10 @@
             </div>
 
             <!-- Panels -->
-            <div style="position:relative; min-height:520px;">
+            <div id="mod-panels" style="position:relative; max-height:560px; overflow-y:auto;">
                 <!-- Schema -->
-                <div class="mod-content" id="mod-schema" style="padding:24px; opacity:0; position:absolute; top:0; left:0; right:0; pointer-events:none; transition:opacity 0.25s;">
-                    <pre class="mono" style="font-size:11px; line-height:1.6; color:var(--text-2); max-height:460px; overflow:auto; margin:0; white-space:pre-wrap; background:var(--bg-alt); border:1px solid var(--border); border-radius:8px; padding:16px;">{
+                <div class="mod-content" id="mod-schema" style="padding:24px; display:none;">
+                    <pre class="mono" style="font-size:11px; line-height:1.6; color:var(--text-2); overflow:auto; margin:0; white-space:pre-wrap; background:var(--bg-alt); border:1px solid var(--border); border-radius:8px; padding:16px;">{
   "<span style="color:var(--blue)">$defs</span>": {
     "<span style="color:var(--green)">Beneficiary</span>": {
       "type": "object",
@@ -482,8 +482,8 @@
                 </div>
 
                 <!-- Ground Truth -->
-                <div class="mod-content" id="mod-gt" style="padding:24px; opacity:0; position:absolute; top:0; left:0; right:0; pointer-events:none; transition:opacity 0.25s;">
-                    <pre class="mono" style="font-size:11px; line-height:1.6; color:var(--text-2); max-height:460px; overflow:auto; margin:0; white-space:pre-wrap; background:var(--bg-alt); border:1px solid var(--border); border-radius:8px; padding:16px;">{
+                <div class="mod-content" id="mod-gt" style="padding:24px; display:none;">
+                    <pre class="mono" style="font-size:11px; line-height:1.6; color:var(--text-2); overflow:auto; margin:0; white-space:pre-wrap; background:var(--bg-alt); border:1px solid var(--border); border-radius:8px; padding:16px;">{
   "<span style="color:var(--blue)">insured_name</span>": "Walter, Nicole",
   "<span style="color:var(--blue)">insured_date_of_birth</span>": "06/19/1965",
   "<span style="color:var(--blue)">insured_ssn</span>": "230-74-0063",
@@ -508,89 +508,36 @@
                 </div>
 
                 <!-- Plain Text -->
-                <div class="mod-content" id="mod-flow" style="padding:24px; opacity:0; position:absolute; top:0; left:0; right:0; pointer-events:none; transition:opacity 0.25s;">
-                    <pre class="mono" style="font-size:11px; line-height:1.6; color:var(--text-2); max-height:430px; overflow:auto; margin:0; white-space:pre-wrap; background:var(--bg-alt); border:1px solid var(--border); border-radius:8px; padding:16px;">Designation of Beneficiary
-Federal Employees Group Life Insurance (FEGLI) Program
-Walter, Nicole
-06/19/1965
-230-74-0063
-employee
-Wise-Castillo
-Air Brokerage
-East Randybury, TN
-Brown, Danielle H.
-Friend
-20
-Mendoza, Brian
-Colleague
-15
-10
-10
-Perez, John
-Sister
-Cook, Emily
-Boss
-Mendoza, Brian
-Nicole Walter
-7389 Benjamin Hollow Apt. 565, East Randybury, TN
-11/15/2023
-100</pre>
+                <div class="mod-content" id="mod-flow" style="padding:24px; display:none;">
+                    <pre class="mono" id="flow-pre" style="font-size:11px; line-height:1.6; color:var(--text-2); overflow:auto; margin:0; white-space:pre-wrap; background:var(--bg-alt); border:1px solid var(--border); border-radius:8px; padding:16px;">Loading...</pre>
+                    <script>fetch('data/text_flow.txt').then(r=>r.text()).then(t=>{document.getElementById('flow-pre').textContent=t;});</script>
                     <div class="callout-red" style="margin-top:12px; padding:10px 14px;">
                         <span style="font-size:12px; color:var(--text-2);">⚠ Labels and values are interleaved with no spatial structure. "Brown, Danielle H." appears far from "Friend" and "20" — models must guess which values belong together.</span>
                     </div>
                 </div>
 
                 <!-- Spatial Text -->
-                <div class="mod-content" id="mod-layout" style="padding:24px; opacity:0; position:absolute; top:0; left:0; right:0; pointer-events:none; transition:opacity 0.25s;">
-                    <pre class="mono" style="font-size:9px; line-height:1.4; color:var(--text-2); white-space:pre; max-height:430px; overflow:auto; margin:0; background:var(--bg-alt); border:1px solid var(--border); border-radius:8px; padding:16px;">                                                                                                                                               Form Approved
-                                                             Designation of Beneficiary                                     OMB No. 3206-0136
-        Federal Employees                        Federal Employees' Group Life Insurance (FEGLI) Program                Read instructions Important: on the
-        Group Life Insurance                                 (DO NOT erase or cross-out. Use a new form.)           Back of Part 2 before completing this form.
-
-       A.  Information About the Insured (not the Assignee, if there is one) (type or print)
-
-       Name of Insured (Last, first, middle)                                           Date of birth of Insured (mm/dd/yyyy)      Social Security Number of Insured
-       Walter, Nicole                                                            06/19/1965                          230-74-0063
-
-       The Insured is:                   an employee                              If the Insured is retired or receiving Federal Employees' Compensation, give CSA,
-          Place an "X" in the            a retiree
-          appropriate box.
-                                       a compensationer
-
-       Department or agency where the Insured works (If retired, last department or agency where the Insured worked):
-
-       Department or agency                                                        Bureau or division                      Location (city, state, and ZIP code)
-       Wise-Castillo                                                             Air Brokerage                       East Randybury, TN
-
-       B.  Information About the Beneficiary or Beneficiaries
-
-          First name, middle initial, and last name           SSN         Address (Including ZIP code)                Relationship    Percent
-       Brown, Danielle H.                                             1035 Brian Drives Apt. 047                     Friend                 20
-       Mendoza, Brian                                                 253 Caleb Plain                                Colleague             15
-       James Orozco                                                   123 Business Ave                              Boss                   25
-       Cook, Emily                                                    456 Oak Street                                Friend                 10
-       Ingram, Sarah                                                  789 Pine Road                                 Sister                 20
-       Perez, John                                                    321 Elm Boulevard                             Brother                10
-
-                                        Total (Must equal 100%)                                                                           100</pre>
+                <div class="mod-content" id="mod-layout" style="padding:24px; display:none;">
+                    <pre class="mono" id="layout-pre" style="font-size:9px; line-height:1.4; color:var(--text-2); white-space:pre; overflow:auto; margin:0; background:var(--bg-alt); border:1px solid var(--border); border-radius:8px; padding:16px;">Loading...</pre>
+                    <script>fetch('data/text_layout.txt').then(r=>r.text()).then(t=>{document.getElementById('layout-pre').textContent=t;});</script>
                     <div class="callout-green" style="margin-top:12px; padding:10px 14px;">
                         <span style="font-size:12px; color:var(--text-2);">✓ Column alignment preserved. "Brown, Danielle H." is visually aligned with "Friend" and "20" — the table structure is recoverable from whitespace alone. <strong>This modality alone provides +4–19pp over plain text.</strong></span>
                     </div>
                 </div>
 
                 <!-- Image 200 DPI -->
-                <div class="mod-content" id="mod-image" style="padding:24px; opacity:1; transition:opacity 0.25s; text-align:center;">
-                    <div style="max-height:460px; overflow:auto; display:inline-block;">
+                <div class="mod-content" id="mod-image" style="padding:24px; text-align:center;">
+                    <div style="overflow:auto; display:inline-block;">
                         <img src="images/document.png" alt="SF-2823 at 200 DPI" style="max-width:100%; border-radius:4px; border:1px solid var(--border);">
                     </div>
                     <div class="callout-blue" style="margin-top:12px; padding:10px 14px; text-align:left;">
-                        <span style="font-size:12px; color:var(--text-2);">Primary evaluation modality. Clean digital render at 200 DPI — all text is legible. Frontier models reach 97.8% EM.</span>
+                        <span style="font-size:12px; color:var(--text-2);">Primary evaluation modality. Clean digital render at 200 DPI — all text is legible. Frontier models reach 98.0% EM.</span>
                     </div>
                 </div>
 
                 <!-- Image 50 DPI -->
-                <div class="mod-content" id="mod-image50" style="padding:24px; opacity:0; position:absolute; top:0; left:0; right:0; pointer-events:none; transition:opacity 0.25s; text-align:center;">
-                    <div style="max-height:460px; overflow:auto; display:inline-block;">
+                <div class="mod-content" id="mod-image50" style="padding:24px; display:none; text-align:center;">
+                    <div style="overflow:auto; display:inline-block;">
                         <img src="images/document_50dpi.png" alt="SF-2823 at 50 DPI" style="max-width:100%; border-radius:4px; border:1px solid var(--border); image-rendering:pixelated;">
                     </div>
                     <div class="callout-red" style="margin-top:12px; padding:10px 14px; text-align:left;">
@@ -599,8 +546,8 @@ Nicole Walter
                 </div>
 
                 <!-- S+V -->
-                <div class="mod-content" id="mod-sv" style="padding:24px; opacity:0; position:absolute; top:0; left:0; right:0; pointer-events:none; transition:opacity 0.25s; text-align:center;">
-                    <div style="max-height:460px; overflow:auto; display:inline-block;">
+                <div class="mod-content" id="mod-sv" style="padding:24px; display:none; text-align:center;">
+                    <div style="overflow:auto; display:inline-block;">
                         <img src="images/document.png" alt="SF-2823 S+V" style="max-width:100%; border-radius:4px; border:1px solid var(--border);">
                     </div>
                     <div class="callout-purple" style="margin-top:12px; padding:10px 14px; text-align:left;">
@@ -692,7 +639,7 @@ Nicole Walter
                 </button>
                 <div style="max-height:0; overflow:hidden; transition:max-height 0.4s ease; padding:0 20px;">
                     <div style="padding-bottom:16px; font-size:13px; color:var(--text-2); line-height:1.75;">
-                        1,798 single-page, English-language U.S. government forms from agencies including HUD, GSA, FDA, USCIS, and state departments. Forms range from simple 3-field applications to complex documents with nested sections and tabular regions. The benchmark comprises 301 Flat (17%), 1,162 Nested (64%), and 336 Table (19%) documents.
+                        1,777 single-page, English-language U.S. government forms from agencies including HUD, GSA, FDA, USCIS, and state departments. Forms range from simple 3-field applications to complex documents with nested sections and tabular regions. The benchmark comprises 299 Flat (17%), 1,146 Nested (64%), and 332 Table (19%) documents.
                     </div>
                 </div>
             </div>
@@ -820,24 +767,24 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
 
 // ── Leaderboard data ──────────────────────────────────────────
 const models = [
-    { model:"Gemini 2.5 Pro",    size:"API",        em:97.8, anls:98.4, flat:97.3, nested:98.1, table:97.4, perfect:82.6, cat:"frontier" },
-    { model:"Gemini 2.5 Flash",  size:"API",        em:97.2, anls:97.8, flat:96.8, nested:97.6, table:96.3, perfect:80.8, cat:"frontier" },
-    { model:"Qwen3-VL",          size:"8B",         em:96.6, anls:97.5, flat:96.6, nested:97.3, table:94.9, perfect:78.0, cat:"large" },
-    { model:"Llama 4 Maverick",  size:"17B×128E",   em:95.5, anls:97.0, flat:95.0, nested:96.1, table:94.2, perfect:68.5, cat:"large" },
-    { model:"Ministral",         size:"14B",        em:94.7, anls:96.4, flat:94.8, nested:95.1, table:93.8, perfect:65.9, cat:"large" },
-    { model:"GPT-4o",            size:"API",        em:94.7, anls:97.0, flat:95.0, nested:95.2, table:93.4, perfect:64.2, cat:"frontier" },
-    { model:"Llama 4 Scout",     size:"17B×16E",    em:94.3, anls:95.7, flat:95.2, nested:94.3, table:94.1, perfect:63.2, cat:"large" },
-    { model:"NuExtract 2.0",     size:"2B",         em:90.8, anls:92.0, flat:93.1, nested:91.8, table:87.4, perfect:52.6, cat:"small" },
-    { model:"InternVL3.5",       size:"2B",         em:85.5, anls:89.0, flat:89.4, nested:86.1, table:82.6, perfect:42.3, cat:"small" },
-    { model:"Qwen 2.5-VL",       size:"3B",         em:82.5, anls:85.5, flat:80.0, nested:83.1, table:82.0, perfect:43.8, cat:"small" },
-    { model:"Gemma 3n",          size:"E2B",        em:70.8, anls:77.9, flat:76.6, nested:70.9, table:68.5, perfect:19.0, cat:"small" },
-    { model:"MiniCPM-V4",        size:"4B",         em:67.7, anls:69.6, flat:84.8, nested:66.0, table:65.0, perfect:23.6, cat:"small" },
-    { model:"Gemma 3",           size:"4B",         em:65.1, anls:74.7, flat:71.6, nested:64.9, table:63.2, perfect:13.6, cat:"small" },
-    { model:"h2oVL Miss.",       size:"2B",         em:61.0, anls:64.6, flat:67.1, nested:61.1, table:58.5, perfect:11.6, cat:"small" },
-    { model:"Qwen3-VL",          size:"2B",         em:34.4, anls:34.9, flat:93.3, nested:26.9, table:29.7, perfect:29.4, cat:"low" },
-    { model:"h2oVL Miss.",       size:"800M",       em:34.1, anls:36.0, flat:35.9, nested:33.1, table:35.9, perfect:5.9,  cat:"low" },
-    { model:"InternVL3.5",       size:"1B",         em:28.1, anls:29.7, flat:78.9, nested:22.4, table:21.9, perfect:11.2, cat:"low" },
-    { model:"Qwen2-VL",          size:"2B",         em:9.7,  anls:9.9,  flat:16.5, nested:9.0,  table:8.8,  perfect:4.3,  cat:"low" },
+    { model:"Gemini 2.5 Pro",    size:"API",        em:98.0, anls:98.5, flat:97.3, nested:98.2, table:97.7, perfect:82.8, cat:"frontier" },
+    { model:"Gemini 2.5 Flash",  size:"API",        em:97.3, anls:97.9, flat:96.9, nested:97.7, table:96.5, perfect:81.0, cat:"frontier" },
+    { model:"Qwen3-VL",          size:"8B",         em:96.6, anls:97.6, flat:96.6, nested:97.3, table:95.0, perfect:78.2, cat:"large" },
+    { model:"Llama 4 Maverick",  size:"17B×128E",   em:95.6, anls:97.1, flat:95.1, nested:96.1, table:94.4, perfect:68.7, cat:"large" },
+    { model:"Ministral",         size:"14B",        em:94.8, anls:96.5, flat:94.8, nested:95.1, table:94.0, perfect:66.0, cat:"large" },
+    { model:"GPT-4o",            size:"API",        em:94.8, anls:97.1, flat:95.1, nested:95.3, table:93.5, perfect:64.3, cat:"frontier" },
+    { model:"Llama 4 Scout",     size:"17B×16E",    em:94.3, anls:95.8, flat:95.2, nested:94.3, table:94.1, perfect:63.4, cat:"large" },
+    { model:"NuExtract 2.0",     size:"2B",         em:90.8, anls:92.1, flat:93.1, nested:91.9, table:87.3, perfect:52.7, cat:"small" },
+    { model:"InternVL3.5",       size:"2B",         em:85.6, anls:89.1, flat:89.6, nested:86.1, table:82.7, perfect:42.4, cat:"small" },
+    { model:"Qwen 2.5-VL",       size:"3B",         em:82.5, anls:85.4, flat:79.9, nested:83.1, table:81.9, perfect:43.7, cat:"small" },
+    { model:"Gemma 3n",          size:"E2B",        em:71.0, anls:78.1, flat:76.7, nested:71.0, table:68.8, perfect:19.0, cat:"small" },
+    { model:"MiniCPM-V4",        size:"4B",         em:67.9, anls:69.8, flat:84.8, nested:66.2, table:65.5, perfect:23.6, cat:"small" },
+    { model:"Gemma 3",           size:"4B",         em:65.3, anls:75.0, flat:71.7, nested:65.0, table:63.6, perfect:13.7, cat:"small" },
+    { model:"h2oVL Miss.",       size:"2B",         em:61.3, anls:64.9, flat:67.2, nested:61.3, table:58.9, perfect:11.6, cat:"small" },
+    { model:"Qwen3-VL",          size:"2B",         em:34.2, anls:34.7, flat:93.3, nested:26.8, table:29.0, perfect:29.3, cat:"low" },
+    { model:"h2oVL Miss.",       size:"800M",       em:34.2, anls:36.1, flat:35.8, nested:33.2, table:36.0, perfect:5.9,  cat:"low" },
+    { model:"InternVL3.5",       size:"1B",         em:28.2, anls:29.8, flat:79.0, nested:22.4, table:22.2, perfect:11.2, cat:"low" },
+    { model:"Qwen2-VL",          size:"2B",         em:9.7,  anls:10.0, flat:16.4, nested:9.0,  table:8.9,  perfect:4.3,  cat:"low" },
 ];
 
 const catStyles = {
@@ -919,9 +866,9 @@ const examples = [
         accent: "#34A853"
     },
     {
-        id: "92210.1", title: "A clean form, an imperfect result", tag: "Table · 15 fields",
-        desc: "Gemini 2.5 Pro misreads a field on this straightforward form. No model achieves 100% across the full benchmark — 133 documents remain unsolved.",
-        scores: { "Gemini 2.5 Pro": 93, "Qwen3-VL 8B": 100, "NuExtract 2B": 86, "InternVL3.5 2B": 79 },
+        id: "92210.1", title: "A clean form, an imperfect result", tag: "Table · 7 fields",
+        desc: "Gemini 2.5 Pro misreads a field on this straightforward form. No model achieves 100% across the full benchmark — 91 documents remain imperfect across all models.",
+        scores: { "Gemini 2.5 Pro": 85.7, "Qwen3-VL 8B": 85.7, "NuExtract 2B": 85.7, "InternVL3.5 2B": 85.7 },
         accent: "#F9AB00"
     },
 ];
@@ -972,14 +919,15 @@ function toggleFaq(btn) {
 
 function switchMod(tab) {
     document.querySelectorAll('.mod-content').forEach(el => {
-        el.style.opacity = '0';
-        el.style.pointerEvents = 'none';
-        el.style.position = 'absolute';
+        el.style.display = 'none';
     });
     const panel = document.getElementById('mod-' + tab);
+    panel.style.display = '';
     panel.style.opacity = '1';
-    panel.style.pointerEvents = 'auto';
     panel.style.position = 'relative';
+
+    // Reset scroll to top
+    document.getElementById('mod-panels').scrollTop = 0;
 
     document.querySelectorAll('.mod-tab').forEach(btn => {
         const isActive = btn.dataset.tab === tab;
