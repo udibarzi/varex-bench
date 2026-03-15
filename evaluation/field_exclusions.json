@@ -1,0 +1,1242 @@
+{
+  "exclusions": {
+    "1000": [
+      "control_number"
+    ],
+    "101": [
+      "label_request.requested_labels_quantity"
+    ],
+    "1013": [
+      "agreement_statements[0]",
+      "agreement_statements[1]",
+      "agreement_statements[2]",
+      "time_limit_agreement_type",
+      "work_telephone_number"
+    ],
+    "1026": [
+      "employee.organization_code",
+      "employee.social_security_number"
+    ],
+    "11600": [
+      "control_number"
+    ],
+    "11601": [
+      "control_number"
+    ],
+    "2": [
+      "prior_approval_check"
+    ],
+    "2029": [
+      "completer.name_telephone",
+      "details",
+      "subject"
+    ],
+    "203": [
+      "lost_label_range[0]"
+    ],
+    "2063": [
+      "interest_amount"
+    ],
+    "21019": [
+      "author"
+    ],
+    "21023": [
+      "recipient.name"
+    ],
+    "2453.1-ca": [
+      "owner_address.city"
+    ],
+    "25013": [
+      "employee.pay_plan"
+    ],
+    "25027": [
+      "schedule_deviations[0]",
+      "schedule_deviations[1]",
+      "schedule_deviations[2]",
+      "supervisor_approval.supervisor_name"
+    ],
+    "25031": [
+      "contact_information.day_phone"
+    ],
+    "2537": [
+      "unpaid_principal_balance"
+    ],
+    "26": [
+      "follow_up"
+    ],
+    "2742": [
+      "net_income_received.gross_income"
+    ],
+    "2744-D": [
+      "disbursements[0].amount"
+    ],
+    "307": [
+      "applicant_business_information.business_address.city",
+      "applicant_business_information.business_address.state",
+      "applicant_business_information.business_address.street_address",
+      "applicant_business_information.business_address.zip_code",
+      "applicant_personal_information.mailing_address.city",
+      "applicant_personal_information.mailing_address.state",
+      "applicant_personal_information.mailing_address.street_address",
+      "applicant_personal_information.mailing_address.zip_code"
+    ],
+    "3303": [
+      "applicant.supervisor.email",
+      "applicant.supervisor.name",
+      "applicant.supervisor.phone"
+    ],
+    "40094": [
+      "activity_details.activity_information"
+    ],
+    "40097": [
+      "home_funds_direct_loan.details",
+      "home_funds_dpl.details",
+      "private_funds.details"
+    ],
+    "40150": [
+      "grant_information[0]",
+      "grant_information[1]",
+      "grant_information[2]"
+    ],
+    "40155": [
+      "remaining_balance"
+    ],
+    "40161": [
+      "status_of_funds.funds_received",
+      "status_of_funds.funds_remaining",
+      "status_of_funds.funds_utilized"
+    ],
+    "4710": [
+      "contracts_awarded[0].contract_amount",
+      "contracts_awarded[0].contractor_name",
+      "state"
+    ],
+    "4730": [
+      "fringe_benefits.other_benefits"
+    ],
+    "4732": [
+      "deposit_ticket_number"
+    ],
+    "4743": [
+      "agency_personnel_contacted[0]",
+      "agency_personnel_contacted[1]",
+      "agency_personnel_contacted[2]"
+    ],
+    "50080alc": [
+      "voucher_number"
+    ],
+    "50080df2": [
+      "completer_info.name_phone",
+      "period_covered"
+    ],
+    "50080fss": [
+      "disbursement_type"
+    ],
+    "50080rse": [
+      "completed_by.name_phone_number",
+      "disbursement_type"
+    ],
+    "50080rsf": [
+      "disbursement_type"
+    ],
+    "50110-A_pih": [
+      "property_address"
+    ],
+    "50111-A_pih": [
+      "property_address"
+    ],
+    "50118-A_pih": [
+      "borrower_address"
+    ],
+    "50131-A": [
+      "property_address.state"
+    ],
+    "50143-A_pih": [
+      "property_address"
+    ],
+    "5084": [
+      "building_description"
+    ],
+    "671a": [
+      "background_information"
+    ],
+    "68": [
+      "background"
+    ],
+    "733": [
+      "accounting_information.account_code",
+      "accounting_information.fund_code"
+    ],
+    "76E": [
+      "applicant.name"
+    ],
+    "80-b": [
+      "transit_subsidy_office_action_notes"
+    ],
+    "90051": [
+      "sales_agent_firm"
+    ],
+    "90075": [
+      "comments"
+    ],
+    "9142C": [
+      "employer_information.zip_code"
+    ],
+    "92450-ca": [
+      "contractor.name"
+    ],
+    "92456": [
+      "residents.functional_status[0].number_of_project_residents",
+      "residents.functional_status[0].number_sc_assisted_during_reporting_period",
+      "residents.functional_status[0].percentage_of_total",
+      "residents.functional_status[1].number_of_project_residents",
+      "residents.functional_status[1].number_sc_assisted_during_reporting_period",
+      "residents.functional_status[1].percentage_of_total",
+      "residents.functional_status[2].number_of_project_residents",
+      "residents.functional_status[2].number_sc_assisted_during_reporting_period",
+      "residents.functional_status[2].percentage_of_total",
+      "service_coordinator.email"
+    ],
+    "92457M": [
+      "surveyor_information.license_number"
+    ],
+    "92485": [
+      "mortgagee.address"
+    ],
+    "92544": [
+      "property_address"
+    ],
+    "92746-CMB": [
+      "data_entry_operator",
+      "preparer"
+    ],
+    "92900ASpanish": [
+      "borrower.current_address",
+      "borrower.name"
+    ],
+    "BCIA8016sample": [
+      "applicant_date_of_birth"
+    ],
+    "BCIA8016samplefiu": [
+      "applicant_info.date_of_birth"
+    ],
+    "CDPH_8746": [
+      "applicant.name"
+    ],
+    "DIC-23_(9-01)": [
+      "driver_identification.driver_license_expiration"
+    ],
+    "DOC_20570": [
+      "certification_of_readiness_date",
+      "certification_of_settlement_findings_date"
+    ],
+    "DOC_20580": [
+      "property_description"
+    ],
+    "DOC_20628": [
+      "oldest_unpaid_installment"
+    ],
+    "DOC_20703": [
+      "mortgage_recorded.recording_office"
+    ],
+    "DOC_22535": [
+      "account_balances[0].account_number",
+      "account_balances[0].balance_date",
+      "account_balances[1].balance_date",
+      "account_balances[2].account_number",
+      "account_balances[2].balance_date",
+      "account_balances[3].balance_date",
+      "account_balances[4].account_number",
+      "account_balances[4].balance_date",
+      "financial_institution_details.institution_address",
+      "financial_institution_details.institution_contact"
+    ],
+    "DOC_22545": [
+      "modification_type"
+    ],
+    "ETA_Form_9033A": [
+      "location_information.location_address",
+      "location_information.location_city",
+      "location_information.location_state"
+    ],
+    "ETR-34": [
+      "course_dates"
+    ],
+    "FDA-2359p_508(10.13)": [
+      "emergency_permit_status"
+    ],
+    "FDA-2877_Stat_Sec_Ext_04-21-23": [
+      "model_brand"
+    ],
+    "FDA-3038_06-18-19": [
+      "facility_address.street",
+      "mailing_address.street"
+    ],
+    "FDA-356h_AcroForm_Sec_07-07-2023_0": [
+      "applicant.address.city",
+      "applicant.address.state",
+      "applicant.address.street",
+      "applicant.address.zip_code",
+      "us_agent.address.city",
+      "us_agent.address.state",
+      "us_agent.address.street",
+      "us_agent.address.zip_code"
+    ],
+    "FDA-3649_stat_ext_sec_05-08-23": [
+      "product_manufacturer.manufacturer_address.city",
+      "product_manufacturer.manufacturer_address.country",
+      "product_manufacturer.manufacturer_address.state",
+      "product_manufacturer.manufacturer_address.street",
+      "product_manufacturer.manufacturer_address.zip_code"
+    ],
+    "FDA-3752_508_(4.13)": [
+      "submitter_contact_info.street_address"
+    ],
+    "FDA_3419_12-13-18": [
+      "user_facility_address.state"
+    ],
+    "GSA1996-22": [
+      "employee_name"
+    ],
+    "GSA219-21": [
+      "inspection_details.type_of_inspection"
+    ],
+    "GSA2553A-21": [
+      "vehicle.vin"
+    ],
+    "GSA3453-16i": [
+      "supervisor.mailing_address.city",
+      "supervisor.mailing_address.state",
+      "supervisor.mailing_address.street",
+      "supervisor.mailing_address.zip_code",
+      "supervisor.telephone_number.area_code",
+      "supervisor.telephone_number.extension",
+      "supervisor.telephone_number.number"
+    ],
+    "GSA_1593": [
+      "accident_details.date_of_accident"
+    ],
+    "GSA_2494": [
+      "closing_costs[14].description",
+      "closing_costs[15].description",
+      "closing_costs[16].description",
+      "closing_costs[17].description",
+      "closing_costs[18].description"
+    ],
+    "GSA_2543a": [
+      "protector.rating"
+    ],
+    "GSA_3192": [
+      "performance_review[0].rating",
+      "performance_review[14].rating",
+      "performance_review[16].rating",
+      "performance_review[1].rating",
+      "performance_review[2].rating"
+    ],
+    "GSA_350": [
+      "pressure_vessels[0].type_of_pressure_vessel"
+    ],
+    "GSA_3627": [
+      "space_available[0]",
+      "space_available[1]"
+    ],
+    "GSA_50A": [
+      "bindery.number_of_stables",
+      "completed_size.size",
+      "distribution.distribution_details.building",
+      "distribution.distribution_details.copies",
+      "distribution.distribution_details.person_name",
+      "distribution.distribution_details.room_number",
+      "order_specification",
+      "text.text_color",
+      "text.text_type",
+      "type_of_service[0].service_type[0]"
+    ],
+    "GSA_66A": [
+      "alterations.alteration_details",
+      "lease_data.lease_details"
+    ],
+    "HQ-135": [
+      "employee.employee_name",
+      "subject_details.subject_name"
+    ],
+    "HUD-1710-B": [
+      "schedule_ii_serial_units_outstanding[0].serial_units_outstanding",
+      "schedule_iii_serial_units_paid[0].serial_units_paid"
+    ],
+    "IID-01": [
+      "services_provided[0].service_fee",
+      "services_provided[1].service_fee",
+      "services_provided[2].service_fee",
+      "services_provided[3].service_fee",
+      "vendor_service_center_information.address_line_1"
+    ],
+    "LAB-201": [
+      "qc_check_lot_number"
+    ],
+    "LAB-CO-48": [
+      "district_attorney_office.office_contact",
+      "law_enforcement_agency.agency_contact"
+    ],
+    "LS-271": [
+      "applicant_address.state",
+      "state_workers_compensation.state_name"
+    ],
+    "LTC-76": [
+      "availability.counties[0]",
+      "availability.counties[1]",
+      "availability.counties[2]"
+    ],
+    "LTC-82": [
+      "notary_date"
+    ],
+    "LTC-84": [
+      "notary.date"
+    ],
+    "LTC-86": [
+      "notarization_date"
+    ],
+    "LTC-87": [
+      "notary_date"
+    ],
+    "LTC-92": [
+      "notary_date"
+    ],
+    "MCD-439": [
+      "principal.address.city",
+      "principal.address.state",
+      "principal.address.street"
+    ],
+    "OF301-21": [
+      "languages[0]",
+      "qualifications[0]",
+      "qualifications[1]",
+      "telephone_number",
+      "volunteer_interests[0]"
+    ],
+    "OF301-S-21": [
+      "date_of_birth",
+      "phone_number"
+    ],
+    "OF_522": [
+      "patient_signature_date"
+    ],
+    "OF_69": [
+      "assignment_position.department",
+      "current_position.department"
+    ],
+    "PSP-05": [
+      "insurance_company.address.city",
+      "insurance_company.address.state",
+      "insurance_company.address.street",
+      "insurance_company.address.zip_code"
+    ],
+    "RC-4A": [
+      "licenses[0]",
+      "licenses[1]",
+      "licenses[2]"
+    ],
+    "RC-99": [
+      "statement_of_understanding"
+    ],
+    "RSD-2": [
+      "work_city_and_division"
+    ],
+    "RSD-25": [
+      "subject_entity_information[0].address",
+      "subject_entity_information[1].address",
+      "subject_entity_information[2].address"
+    ],
+    "RSD-48": [
+      "phone_number"
+    ],
+    "RSD-803": [
+      "business_entity.representative.name"
+    ],
+    "RSD-805": [
+      "seller_address.state"
+    ],
+    "SAMS1108": [
+      "eviction_status.status_date"
+    ],
+    "SAMS1120": [
+      "incorrect_entry.lease_number",
+      "incorrect_entry.unit_number"
+    ],
+    "SBT-9": [
+      "property_damage",
+      "school_bus_type"
+    ],
+    "SF2805-05": [
+      "installment_amount",
+      "retirement_claim_number",
+      "survivor_info.survivor_claim_number"
+    ],
+    "SF3108-13": [
+      "service_periods[2].agency"
+    ],
+    "SF315-14a": [
+      "service_profile[0]"
+    ],
+    "SF317-14a": [
+      "appeal_requestor_name"
+    ],
+    "SF35-16c": [
+      "penal_sum_unit"
+    ],
+    "SF428-17": [
+      "certifying_official.name"
+    ],
+    "SF523-93": [
+      "witnesses[0].witness_1_name",
+      "witnesses[0].witness_2_name",
+      "witnesses[1].witness_1_name",
+      "witnesses[1].witness_2_name"
+    ],
+    "SF85PS-17": [
+      "full_name"
+    ],
+    "SF_1198": [
+      "allotment_action"
+    ],
+    "SF_515": [
+      "sponsor_info.relation_to_patient"
+    ],
+    "SF_519B": [
+      "patient.patient_identification",
+      "patient.sex"
+    ],
+    "SF_541": [
+      "specimen_info.source_of_specimen"
+    ],
+    "SF_59": [
+      "reinstatement_eligibility"
+    ],
+    "THP-84": [
+      "roadway_information.mile_post",
+      "roadway_information.street_no_prefix"
+    ],
+    "VS108Sample": [
+      "child.birth_date",
+      "child.name",
+      "petitioner"
+    ],
+    "VS109Sample": [
+      "deceased.death_date",
+      "petitioner.name",
+      "petitioner_interest"
+    ],
+    "VS22": [
+      "child_name"
+    ],
+    "VTR-125": [
+      "applicant_name"
+    ],
+    "VTR-135": [
+      "vehicle_info.model"
+    ],
+    "VTR-209": [
+      "applicant_info.applicant_address",
+      "expiration_date",
+      "vehicle_info.vehicle_model"
+    ],
+    "VTR-216": [
+      "applicant_information.applicant_address.city",
+      "applicant_information.applicant_address.state",
+      "applicant_information.applicant_address.street",
+      "applicant_information.applicant_address.zip_code"
+    ],
+    "VTR-262": [
+      "vehicle_order_number",
+      "vehicle_title_number"
+    ],
+    "VTR-265-M": [
+      "mechanic_customer_information.customer_address.street",
+      "mechanic_customer_information.mechanic_address.street",
+      "purchaser_information.purchaser_address.street"
+    ],
+    "VTR-265-VSF": [
+      "storage_facility_information.facility_zip_code",
+      "vehicle_information.vehicle_model"
+    ],
+    "VTR-271": [
+      "license_plate_number",
+      "title_document_number"
+    ],
+    "VTR-331-SPO": [
+      "dates.incident_date",
+      "license_plate_state",
+      "salvage_pool_operator_address.street"
+    ],
+    "VTR-415": [
+      "applicant_info.address.city",
+      "applicant_info.address.state",
+      "applicant_info.address.street",
+      "applicant_info.address.zip_code"
+    ],
+    "VTR-423": [
+      "applicant_address.state"
+    ],
+    "VTR-52-F": [
+      "applicant_phone_number"
+    ],
+    "VTR-53": [
+      "applicant_address.state"
+    ],
+    "VTR-615": [
+      "applicant.address.line1",
+      "applicant.address.line2",
+      "applicant.address.state",
+      "applicant.address.zip_code"
+    ],
+    "VTR-62-BUS": [
+      "address.state"
+    ],
+    "VTR-71-2": [
+      "applicant_information.address.street"
+    ],
+    "VTR-76": [
+      "vehicle_information.vehicle_model",
+      "vehicle_information.vehicle_type"
+    ],
+    "VTR-815": [
+      "applicant_phone_number"
+    ],
+    "VTR-900": [
+      "applicant.address.city",
+      "applicant.address.line1",
+      "applicant.address.line2",
+      "applicant.address.state",
+      "seller.address.city",
+      "seller.address.line1",
+      "seller.address.line2",
+      "seller.address.state"
+    ],
+    "WH-2": [
+      "state_homeworker_certificate.issue_date"
+    ],
+    "aa137sw": [
+      "arrest_date"
+    ],
+    "aa33": [
+      "ticket_info.violation_location"
+    ],
+    "aafdri": [
+      "current_address.state",
+      "current_address.zip_code",
+      "ny_dl_number"
+    ],
+    "ab-1": [
+      "appellant.phone_numbers",
+      "owcp_decision_dates"
+    ],
+    "ca-2": [
+      "noi_code",
+      "type_code"
+    ],
+    "cdph1025": [
+      "geographic_area.representing[0]",
+      "geographic_area.representing[1]",
+      "geographic_area.representing[2]"
+    ],
+    "cdph104": [
+      "animals[0].origin",
+      "animals[1].origin",
+      "animals[2].origin"
+    ],
+    "cdph247b": [
+      "medical_conditions"
+    ],
+    "cdph263": [
+      "staffing_details.licensed_nurse_ratios.am_shift",
+      "staffing_details.licensed_nurse_ratios.night_shift",
+      "staffing_details.licensed_nurse_ratios.pm_shift",
+      "staffing_details.registered_nurse_ratios.am_shift",
+      "staffing_details.registered_nurse_ratios.night_shift",
+      "staffing_details.registered_nurse_ratios.pm_shift"
+    ],
+    "cdph283b": [
+      "personal_information.social_security_number"
+    ],
+    "cdph283f": [
+      "applicant_name"
+    ],
+    "cdph391": [
+      "program_identification_number"
+    ],
+    "cdph4410": [
+      "child_name",
+      "father_email",
+      "father_name",
+      "phone"
+    ],
+    "cdph4410sp": [
+      "child_birth_address.address",
+      "current_postal_address.address"
+    ],
+    "cdph506": [
+      "mailing_address.county"
+    ],
+    "cdph508": [
+      "provider_type"
+    ],
+    "cdph513": [
+      "variable_hours_max",
+      "variable_hours_min"
+    ],
+    "cdph524": [
+      "applicant_name_last",
+      "email",
+      "preferred_name_on_license"
+    ],
+    "cdph5314": [
+      "other_data.special_conditions"
+    ],
+    "cdph6236": [
+      "authorized_person.address.street"
+    ],
+    "cdph6240": [
+      "restriction_request"
+    ],
+    "cdph8002": [
+      "personal_information.applicant_name"
+    ],
+    "cdph8003": [
+      "personal_information.address.city",
+      "personal_information.address.state",
+      "personal_information.address.street",
+      "personal_information.address.zip_code"
+    ],
+    "cdph8011": [
+      "complaint_type"
+    ],
+    "cdph8243IA1": [
+      "delegation_details"
+    ],
+    "cdph8243IR1": [
+      "delegation_letter"
+    ],
+    "cdph8243LR1": [
+      "rso_appointment_letter"
+    ],
+    "cdph8552": [
+      "evaluation_results[0].result_description",
+      "evaluator_information.evaluator_license",
+      "structure_address.state",
+      "type_of_evaluation",
+      "type_of_structure"
+    ],
+    "cdph8564": [
+      "citizenship_details",
+      "contact_information.cell_phone",
+      "contact_information.email"
+    ],
+    "cdph8567": [
+      "mother_description"
+    ],
+    "cdph8594": [
+      "facility_address.zip_code",
+      "ownership_information.owners_or_officers",
+      "ownership_information.ownership_type",
+      "water_source_information.source_type"
+    ],
+    "cdph8642": [
+      "shellfish_storage_location"
+    ],
+    "cdph8678": [
+      "business_license_information.license_number",
+      "business_license_information.permit_number",
+      "other_products"
+    ],
+    "cdph8694": [
+      "exemption_reason"
+    ],
+    "cdph8722": [
+      "applicant_residential_address.state"
+    ],
+    "cdph8722sp": [
+      "applicant_residential_address.state"
+    ],
+    "cdph8724": [
+      "enrollment_site.name_and_number"
+    ],
+    "cdph8727": [
+      "client_residential_address.state",
+      "ew_provider_agency_address.state"
+    ],
+    "cdph8736": [
+      "client.social_security_number"
+    ],
+    "cdph8745": [
+      "re_enrollment_due_date"
+    ],
+    "cdph8746sp": [
+      "renewal_reason"
+    ],
+    "cdph8747": [
+      "enrollment_worker.attestation"
+    ],
+    "cdph8760": [
+      "payment_details.account_number",
+      "payment_details.routing_number"
+    ],
+    "cdph8763": [
+      "facility_address.country"
+    ],
+    "cdph9039a": [
+      "live_scan_information.live_scan_location",
+      "live_scan_information.live_scan_result"
+    ],
+    "cdph9042": [
+      "legal_representative.telephone_number",
+      "mailing_address.state",
+      "telephone_number"
+    ],
+    "cdph9042sp": [
+      "applicant_name"
+    ],
+    "cdph9044": [
+      "office_fax_number",
+      "office_telephone_number"
+    ],
+    "cdph9046": [
+      "format.delimiter",
+      "format.output_format"
+    ],
+    "cdphe279": [
+      "date_employed_as_instructor_dsd"
+    ],
+    "cm-913": [
+      "exertional_requirements.physical_demands"
+    ],
+    "cp30": [
+      "applicant.zip_code"
+    ],
+    "dmv_1575": [
+      "principal.address.city",
+      "principal.address.state",
+      "principal.address.street",
+      "principal.address.zip_code"
+    ],
+    "dmv_1576a": [
+      "company.address.city",
+      "company.address.county",
+      "company.address.state",
+      "company.address.street",
+      "company.address.zip_code"
+    ],
+    "dmv_1753": [
+      "bond_expiry_month"
+    ],
+    "dmv_LF131AB": [
+      "dealership_address.state"
+    ],
+    "drsd445": [
+      "participant.mailing_address.city",
+      "participant.mailing_address.state",
+      "participant.mailing_address.street",
+      "participant.mailing_address.zip_code"
+    ],
+    "drsms133": [
+      "personal_information.address.city",
+      "personal_information.address.state",
+      "personal_information.address.street",
+      "personal_information.address.zip_code"
+    ],
+    "drsms133-drsms100": [
+      "personal_information.contact_information"
+    ],
+    "drsms145": [
+      "mailing_address.zip"
+    ],
+    "drsms245-drsms144": [
+      "mailing_address.state"
+    ],
+    "drsms455": [
+      "personal_information.first_name"
+    ],
+    "drsms474": [
+      "retiree_state"
+    ],
+    "ds1": [
+      "program_info.program_fax_number",
+      "program_info.program_telephone_number",
+      "telephone_number"
+    ],
+    "ds500": [
+      "carrier_contact.state",
+      "carrier_contact.zip_code",
+      "drivers[0].address.city",
+      "drivers[0].address.state",
+      "drivers[0].address.street_address",
+      "drivers[0].address.zip_code",
+      "drivers[0].licensing_state"
+    ],
+    "ds704": [
+      "diabetic_condition_stabilization"
+    ],
+    "ds876": [
+      "applicant_address.applicant_state"
+    ],
+    "ds879": [
+      "mailing_address.state",
+      "physical_address.state"
+    ],
+    "fha3281": [
+      "management_agreement_terms.terms_and_conditions"
+    ],
+    "fha3283": [
+      "project_location"
+    ],
+    "fw7sp": [
+      "applicant_birth_date",
+      "applicant_id_info.expiry"
+    ],
+    "g-1041": [
+      "immigrant_information.country_of_origin"
+    ],
+    "g-1450": [
+      "credit_card_holder.address.city",
+      "credit_card_holder.address.street",
+      "credit_card_holder.address.zip_code"
+    ],
+    "g-28": [
+      "attorney_address.apt"
+    ],
+    "i-102": [
+      "other_names_used[0]"
+    ],
+    "i-129": [
+      "petitioner_information.address.city",
+      "petitioner_information.address.street",
+      "petitioner_information.address.zip_code",
+      "petitioner_information.contact_information.email",
+      "petitioner_information.contact_information.phone",
+      "petitioner_information.name"
+    ],
+    "i-129f": [
+      "petitioner_full_name"
+    ],
+    "i-129s": [
+      "attorney_or_representative.contact_information"
+    ],
+    "i-193": [
+      "applicant_signature_city_state"
+    ],
+    "i-290b": [
+      "applicant_information.mailing_address.city",
+      "applicant_information.mailing_address.country",
+      "applicant_information.mailing_address.zip_code"
+    ],
+    "i-485": [
+      "form_i_485_edition"
+    ],
+    "i-485supa": [
+      "family_name"
+    ],
+    "i-566": [
+      "full_legal_name",
+      "marital_status"
+    ],
+    "i-590": [
+      "identity_documents[0]",
+      "identity_documents[1]",
+      "identity_documents[2]",
+      "place_of_birth.country"
+    ],
+    "i-600": [
+      "petitioner_information.name",
+      "petitioner_information.other_names_used[0]",
+      "petitioner_information.other_names_used[1]"
+    ],
+    "i-600a": [
+      "applicant_contact_information.address.city",
+      "applicant_contact_information.address.street",
+      "applicant_contact_information.address.zip_code"
+    ],
+    "i-687": [
+      "other_a_numbers[0]",
+      "other_a_numbers[1]"
+    ],
+    "i-694": [
+      "full_legal_name",
+      "other_names_used[0]",
+      "other_names_used[1]"
+    ],
+    "i-854a": [
+      "alien_information.full_name"
+    ],
+    "i-854b": [
+      "alien_information.full_name"
+    ],
+    "i-864a": [
+      "household_member_info.name"
+    ],
+    "i-865": [
+      "action_block_date",
+      "sponsored_immigrants[0].full_name"
+    ],
+    "i-9-paper-version": [
+      "employee_information.mailing_address.city",
+      "employee_information.mailing_address.state",
+      "employee_information.mailing_address.street_address",
+      "preparer_translator_information.preparer_translator_address.city",
+      "preparer_translator_information.preparer_translator_address.state",
+      "preparer_translator_information.preparer_translator_address.street_address"
+    ],
+    "i-914supa": [
+      "derivative_applicant.full_legal_name",
+      "principal_applicant.full_legal_name"
+    ],
+    "i-914supb": [
+      "full_legal_name",
+      "other_names_used[1]"
+    ],
+    "i-918supb": [
+      "agency_information.agency_contact",
+      "victim_information.name"
+    ],
+    "i-956h": [
+      "previous_receipt_number"
+    ],
+    "irp1poa": [
+      "authorized_signatory.title"
+    ],
+    "lab167": [
+      "sub_total_volume"
+    ],
+    "lab416": [
+      "patient_name",
+      "test_requested[0]"
+    ],
+    "ls-204": [
+      "pre_existing_condition",
+      "telephone"
+    ],
+    "ls-206": [
+      "employer.address.city",
+      "employer.address.state",
+      "employer.address.street",
+      "employer.address.zip_code",
+      "insurance_carrier.address.city",
+      "insurance_carrier.address.state",
+      "insurance_carrier.address.street",
+      "insurance_carrier.address.zip_code"
+    ],
+    "ls-207": [
+      "claimant.name"
+    ],
+    "ls-801": [
+      "representative.address.city",
+      "representative.address.street",
+      "representative.address.zip_code"
+    ],
+    "ls-802": [
+      "signatory.address.city",
+      "signatory.address.street",
+      "signatory.address.zip_code"
+    ],
+    "mv14413": [
+      "vehicle_information.vehicle_year"
+    ],
+    "mv15ci": [
+      "requester_address.state"
+    ],
+    "mv15cp": [
+      "requester_address.zip_code"
+    ],
+    "mv15cr": [
+      "requester_date_of_birth"
+    ],
+    "mv15preed": [
+      "applicant.phone_number",
+      "primary_contact.phone_number"
+    ],
+    "mv2001": [
+      "address.zip_code"
+    ],
+    "mv264p": [
+      "declaration"
+    ],
+    "mv2788cds": [
+      "provider_information.provider_address.city",
+      "provider_information.provider_address.state",
+      "provider_information.provider_address.street",
+      "provider_information.provider_address.zip_code"
+    ],
+    "mv37": [
+      "delivery_agent.middle_initial"
+    ],
+    "mv44nca": [
+      "hair_color",
+      "issue_date"
+    ],
+    "mv44ncs": [
+      "social_security_number"
+    ],
+    "mv45s": [
+      "address.residential_address",
+      "parent_legal_guardian_mailing_address.mailing_address"
+    ],
+    "mv522": [
+      "owner.phone_number"
+    ],
+    "mv653": [
+      "vehicles[0]"
+    ],
+    "mv653v": [
+      "certifier_info.zip",
+      "organization_address",
+      "vehicles[0].make",
+      "vehicles[0].model",
+      "vehicles[0].plate_number",
+      "vehicles[0].vehicle_id",
+      "vehicles[0].year"
+    ],
+    "mv80w": [
+      "passenger.last_name"
+    ],
+    "mv902i": [
+      "daytime_phone_number",
+      "vehicle_year"
+    ],
+    "mv902s": [
+      "daytime_phone"
+    ],
+    "n-336": [
+      "other_names_used[0]",
+      "other_names_used[1]"
+    ],
+    "of5057": [
+      "agency_use_notes"
+    ],
+    "opm1304": [
+      "success_story_number"
+    ],
+    "opm1308": [
+      "mentor.work_email",
+      "supervisor.title",
+      "supervisor.work_email"
+    ],
+    "opm1674": [
+      "series"
+    ],
+    "opm913b": [
+      "agreement_details.agreement_type"
+    ],
+    "rh1027": [
+      "complainant_type"
+    ],
+    "ri20-064": [
+      "civil_service_claim_number"
+    ],
+    "ri30-010_2018_05": [
+      "claim_number",
+      "living_situation"
+    ],
+    "ri38-45": [
+      "person_name"
+    ],
+    "sav1050": [
+      "customer_name"
+    ],
+    "sav1851": [
+      "bonds[0].bond_number",
+      "bonds[0].issue_date",
+      "bonds[1].bond_number",
+      "bonds[1].issue_date",
+      "bonds[2].bond_number",
+      "bonds[2].issue_date",
+      "delivery_instructions.delivery_address.city",
+      "delivery_instructions.delivery_address.state",
+      "delivery_instructions.delivery_address.street"
+    ],
+    "sav2517": [
+      "bonds[8].bond_identifier"
+    ],
+    "sav2966": [
+      "purchaser_address.street"
+    ],
+    "sav5257": [
+      "telephone.number"
+    ],
+    "sav5396": [
+      "taxpayer_identification_number"
+    ],
+    "sec5179": [
+      "treasury_direct_transfer.treasury_direct_account_name"
+    ],
+    "serssubs": [
+      "mailing_address.state"
+    ],
+    "sf2805": [
+      "installment_amount",
+      "retirement_claim_number",
+      "survivor.claim_number"
+    ],
+    "sf2806-1": [
+      "fiscal_data.field1",
+      "service_history_data.field1",
+      "service_history_data.field2"
+    ],
+    "sf3101": [
+      "pat"
+    ],
+    "sf59": [
+      "reason_for_submission",
+      "type_of_action"
+    ],
+    "sf85ps": [
+      "drug_use_history[0].details[0].date_range.end",
+      "drug_use_history[0].details[0].date_range.start",
+      "drug_use_history[0].details[0].frequency",
+      "drug_use_history[0].details[0].substance",
+      "drug_use_history[0].details[1].date_range.end",
+      "drug_use_history[0].details[1].date_range.start",
+      "drug_use_history[0].details[1].frequency",
+      "drug_use_history[0].details[1].substance",
+      "full_name"
+    ],
+    "ssa-2512": [
+      "active_duty_service[0].end_date",
+      "active_duty_service[0].start_date",
+      "reserve_service[0].end_date",
+      "reserve_service[0].start_date"
+    ],
+    "ssa-4111": [
+      "applicant_address"
+    ],
+    "ssa-4162": [
+      "witnesses[0].name"
+    ],
+    "ssa-4814": [
+      "claimant.name",
+      "claimant.phone_number"
+    ],
+    "ssa-546": [
+      "benefits[0].employer"
+    ],
+    "ssa-89": [
+      "reason_for_consent"
+    ],
+    "wh530": [
+      "applicant_representative.name"
+    ]
+  },
+  "_metadata": {
+    "v4_human_review": {
+      "fields": 468,
+      "docs": 287
+    },
+    "schema_gt_mismatches": {
+      "fields": 114,
+      "docs": 33
+    },
+    "empty_items_schema": {
+      "fields": 28,
+      "docs": 4
+    },
+    "total_fields": 610,
+    "total_docs": 306
+  }
+}
