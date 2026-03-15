@@ -336,8 +336,8 @@ def main():
     parser.add_argument("results_dir", type=Path)
     parser.add_argument("--data-dir", type=Path, required=True)
     parser.add_argument("--manifest", type=Path, default=None)
-    parser.add_argument("--field-exclusions", type=Path, default=None,
-                        help="JSON file with fields to exclude from scoring (from human review)")
+    parser.add_argument("--field-exclusions", type=Path, required=True,
+                        help="JSON file with fields to exclude from scoring (required — use evaluation/field_exclusions.json)")
     parser.add_argument("--output-dir", type=Path, default=None)
     parser.add_argument("--no-order-invariant", action="store_true",
                         help="Disable order-invariant array matching (strict index comparison)")
