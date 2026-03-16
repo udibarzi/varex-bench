@@ -334,7 +334,10 @@ def score_model_mode(model, mode, mode_dir, gt_by_id, doc_split, field_exclusion
 def main():
     parser = argparse.ArgumentParser(description="VAREX Benchmark scoring")
     parser.add_argument("results_dir", type=Path)
-    parser.add_argument("--data-dir", type=Path, required=True)
+    parser.add_argument("--data-dir", type=Path, default=None,
+                        help="Local data directory with GT files (use this OR --dataset)")
+    parser.add_argument("--dataset", type=str, default=None,
+                        help="HuggingFace dataset ID (e.g., ibm-research/VAREX). Loads GT from HF instead of local files.")
     parser.add_argument("--manifest", type=Path, default=None)
     parser.add_argument("--field-exclusions", type=Path, required=True,
                         help="JSON file with fields to exclude from scoring (required — use evaluation/field_exclusions.json)")
@@ -362,17 +365,35 @@ def main():
     # Load GT and classify each doc
     gt_by_id = {}
     doc_split = {}
-    for doc_dir in sorted(args.data_dir.iterdir()):
-        if not doc_dir.is_dir(): continue
-        doc_id = doc_dir.name
-        if active_ids and doc_id not in active_ids: continue
-        gt_path = doc_dir / "ground_truth.json"
-        if not gt_path.exists(): continue
-        gt = json.loads(gt_path.read_text())
-        gt_by_id[doc_id] = gt
-        fg = flatten(gt)
-        non_null_keys = [k for k, v in fg.items() if v is not None and v != "" and v != []]
-        doc_split[doc_id] = classify_doc(non_null_keys)
+
+    if args.dataset:
+        # Load from HuggingFace dataset
+        from datasets import load_dataset
+        print(f"Loading GT from HuggingFace: {args.dataset}")
+        ds = load_dataset(args.dataset, split="benchmark")
+        for row in ds:
+            doc_id = row["doc_id"]
+            if active_ids and doc_id not in active_ids: continue
+            gt = json.loads(row["ground_truth"])
+            gt_by_id[doc_id] = gt
+            fg = flatten(gt)
+            non_null_keys = [k for k, v in fg.items() if v is not None and v != "" and v != []]
+            doc_split[doc_id] = row.get("split") or classify_doc(non_null_keys)
+    elif args.data_dir:
+        # Load from local directory
+        for doc_dir in sorted(args.data_dir.iterdir()):
+            if not doc_dir.is_dir(): continue
+            doc_id = doc_dir.name
+            if active_ids and doc_id not in active_ids: continue
+            gt_path = doc_dir / "ground_truth.json"
+            if not gt_path.exists(): continue
+            gt = json.loads(gt_path.read_text())
+            gt_by_id[doc_id] = gt
+            fg = flatten(gt)
+            non_null_keys = [k for k, v in fg.items() if v is not None and v != "" and v != []]
+            doc_split[doc_id] = classify_doc(non_null_keys)
+    else:
+        parser.error("Provide either --data-dir or --dataset")
 
     # Print split distribution
     split_counts = defaultdict(int)
