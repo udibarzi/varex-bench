@@ -335,9 +335,9 @@
                 Built for diagnosing where small models (≤4B) fail — and how to fix them.
             </p>
             <div class="fade-up d4" style="display:flex; gap:10px; margin-top:32px; flex-wrap:wrap; align-items:center;">
-                <a href="#" class="btn-primary">
+                <a href="#" class="btn-primary" style="pointer-events:none; opacity:0.6;">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>
-                    Paper
+                    Paper (coming soon)
                 </a>
                 <a href="https://huggingface.co/datasets/ibm-research/VAREX" target="_blank" class="btn-outlined">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-2.18c.07-.44.18-.88.18-1.36 0-2.57-2.1-4.64-4.67-4.64C11.55.0 10.3.64 9.44 1.67L8 3.35 6.56 1.67C5.7.64 4.45 0 3.17 0 .6 0-1.5 2.07-1.5 4.64c0 .48.11.92.18 1.36H-2c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h22c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg>
@@ -666,7 +666,7 @@
                 </button>
                 <div style="max-height:0; overflow:hidden; transition:max-height 0.4s ease; padding:0 20px;">
                     <div style="padding-bottom:16px; font-size:13px; color:var(--text-2); line-height:1.75;">
-                        All documents are single-page, English-only, typed digital PDFs — no handwriting, scan artifacts, or multilingual content. Faker-generated values (e.g., 555-prefix phones) don't match real-world distributions. Table documents have a median of 3 rows, below enterprise scale. Nested documents dominate at 64%. The exact-match metric doesn't normalize name ordering or phone formats.
+                        All documents are single-page, English-only, typed digital PDFs — no handwriting, scan artifacts, or multilingual content. Faker-generated values (e.g., 555-prefix phones) don't match real-world distributions. Table documents have a median of 3 rows, below enterprise scale. The exact-match metric doesn't normalize name ordering or phone formats.
                     </div>
                 </div>
             </div>
@@ -701,7 +701,7 @@
                     <a href="#" style="display:block; padding:12px 16px; border-radius:8px; border:1px solid var(--border); text-decoration:none; color:var(--text-1); transition:background 0.15s, border-color 0.15s;" onmouseenter="this.style.background='var(--bg-alt)'; this.style.borderColor='var(--blue)'" onmouseleave="this.style.background=''; this.style.borderColor='var(--border)'">
                         <div style="font-weight:500; font-size:14px; display:flex; align-items:center; gap:8px; color:var(--blue);">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>
-                            Paper (ArXiv)
+                            Paper (ArXiv — coming soon)
                         </div>
                         <div style="font-size:12px; color:var(--text-3); margin-top:3px; margin-left:24px;">Full methodology and analysis</div>
                     </a>
@@ -718,14 +718,14 @@
                         Copy BibTeX
                     </button>
                 </div>
-                <pre class="mono code-block" style="margin-top: 20px;" id="bibtex">@inproceedings{varex2026,
-  title  = {VAREX: A Benchmark for Multi-Modal
-            Structured Extraction from Documents},
-  author = {Barzelay, Udi and Azulai, Ophir and
-            Shapira, Inbar and Friedman, Idan and
-            Abo Dahood, Foad and Lee, Madison and
-            Daniels, Abraham},
-  year   = {2026}
+                <pre class="mono code-block" style="margin-top: 20px;" id="bibtex">@article{varex2026,
+  title   = {VAREX: A Benchmark for Multi-Modal
+             Structured Extraction from Documents},
+  author  = {Barzelay, Udi and Azulai, Ophir and Shapira, Inbar and
+             Friedman, Idan and Abo Dahood, Foad and Lee, Madison and
+             Daniels, Abraham},
+  year    = {2026},
+  note    = {arXiv preprint forthcoming}
 }</pre>
             </div>
         </div>
