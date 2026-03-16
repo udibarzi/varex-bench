@@ -23,28 +23,19 @@ python evaluation/score.py results/ \
     --field-exclusions evaluation/field_exclusions.json
 ```
 
-## Key Results (Vision, Image Only)
-
-| # | Model | Size | EM % |
-|---|-------|------|------|
-| 1 | Gemini 2.5 Pro | API | 98.0 |
-| 2 | Gemini 2.5 Flash | API | 97.3 |
-| 3 | Qwen3-VL | 8B | 96.6 |
-| 4 | Llama 4 Maverick | 17B×128E | 95.6 |
-| 5 | GPT-4o | API | 94.8 |
-| 6 | Ministral | 14B | 94.8 |
-| 7 | NuExtract 2.0 | 2B | 90.8 |
-
-See [full results on the project page](https://udibarzi.github.io/varex-bench/).
+See [full results and model comparison on the project page](https://udibarzi.github.io/varex-bench/).
 
 ## Citation
 
 ```bibtex
-@inproceedings{varex2026,
-  title  = {VAREX: A Benchmark for Multi-Modal
-            Structured Extraction from Documents},
-  author = {Barzelay, Udi and Szpektor, Idan},
-  year   = {2026}
+@article{varex2026,
+  title   = {VAREX: A Benchmark for Multi-Modal
+             Structured Extraction from Documents},
+  author  = {Barzelay, Udi and Azulai, Ophir and Shapira, Inbar and
+             Friedman, Idan and Abo Dahood, Foad and Lee, Madison and
+             Daniels, Abraham},
+  year    = {2026},
+  note    = {arXiv preprint forthcoming}
 }
 ```
 
