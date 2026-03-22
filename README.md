@@ -4,7 +4,7 @@
 
 VAREX-Bench evaluates how well language models extract structured JSON from document images, spatial text, and plain text. It contains 1,777 U.S. government forms with 1,771 unique per-document schemas and 21,084 scoreable fields, evaluated across 20 models and 4 input modalities.
 
-**[Project Page](https://udibarzi.github.io/varex-bench/)** · **[Dataset](https://huggingface.co/datasets/ibm-research/VAREX)** · **[Paper (ArXiv)](#)**
+**[Project Page](https://udibarzi.github.io/varex-bench/)** · **[Dataset](https://huggingface.co/datasets/ibm-research/VAREX)** · **[Paper (ArXiv)](https://arxiv.org/abs/2603.15118)**
 
 ## Quick Start
 
@@ -106,7 +106,9 @@ See [full results and model comparison on the project page](https://udibarzi.git
              Friedman, Idan and Abo Dahood, Foad and Lee, Madison and
              Daniels, Abraham},
   year    = {2026},
-  note    = {arXiv preprint forthcoming}
+  eprint  = {2603.15118},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CV}
 }
 ```
 
