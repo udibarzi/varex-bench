@@ -585,6 +585,13 @@
                 <tbody id="lb-body"></tbody>
             </table>
         </div>
+        <div style="display:flex; gap:16px; margin-top:10px; justify-content:flex-end; flex-wrap:wrap;">
+            <span style="font-size:12px; color:var(--blue); font-weight:500;">● 95+</span>
+            <span style="font-size:12px; color:var(--green); font-weight:500;">● 85–95</span>
+            <span style="font-size:12px; color:var(--yellow); font-weight:500;">● 70–85</span>
+            <span style="font-size:12px; color:#B06000; font-weight:500;">● 50–70</span>
+            <span style="font-size:12px; color:var(--red); font-weight:500;">● &lt;50</span>
+        </div>
     </div>
 </section>
 
@@ -772,6 +779,7 @@ const models = [
     { model:"GPT-4o",            size:"API",        em:94.8, anls:97.1, flat:95.1, nested:95.3, table:93.5, perfect:64.3, cat:"frontier" },
     { model:"Llama 4 Scout",     size:"17B×16E",    em:94.3, anls:95.8, flat:95.2, nested:94.3, table:94.1, perfect:63.4, cat:"large" },
     { model:"NuExtract 2.0",     size:"2B",         em:90.8, anls:92.1, flat:93.1, nested:91.9, table:87.3, perfect:52.7, cat:"small", note:"Fine-tuned for structured extraction; base model (Qwen2-VL 2B) scores 9.7%" },
+    { model:"granite-4.0-3b-vision", size:"3B",     em:85.5, anls:89.1, flat:91.5, nested:85.2, table:84.0, perfect:41.1, cat:"small" },
     { model:"InternVL3.5",       size:"2B",         em:85.6, anls:89.1, flat:89.6, nested:86.1, table:82.7, perfect:42.4, cat:"small" },
     { model:"Qwen 2.5-VL",       size:"3B",         em:82.5, anls:85.4, flat:79.9, nested:83.1, table:81.9, perfect:43.7, cat:"small" },
     { model:"Gemma 3n",          size:"E2B",        em:71.0, anls:78.1, flat:76.7, nested:71.0, table:68.8, perfect:19.0, cat:"small" },
@@ -792,7 +800,8 @@ const catStyles = {
 };
 
 function scoreColor(v) {
-    if (v >= 90) return 'var(--green)';
+    if (v >= 95) return 'var(--blue)';
+    if (v >= 85) return 'var(--green)';
     if (v >= 70) return 'var(--yellow)';
     if (v >= 50) return '#B06000';
     return 'var(--red)';
@@ -840,7 +849,10 @@ function renderRow(m, rank) {
             ${note}
         </td>
         <td class="model-size">${m.size}</td>
-        ${cols.map(col => `<td class="mono" style="font-size:13px; font-weight:500; color:${scoreColor(m[col])};">${m[col].toFixed(1)}</td>`).join('')}
+        ${cols.map(col => {
+    const isEm = col === 'em';
+    return `<td class="mono" style="font-size:${isEm ? '13px' : '13px'}; font-weight:${isEm ? '600' : '500'}; color:${scoreColor(m[col])};${isEm ? '' : ''}">${m[col].toFixed(1)}</td>`;
+}).join('')}
     </tr>`;
 }
 
